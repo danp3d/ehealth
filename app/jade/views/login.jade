@@ -1,0 +1,38 @@
+.col-md-4.col-md-offset-4#login
+    .well
+        h2 eHealth
+        p Health made easy
+
+        .panel.panel-info
+            .panel-heading
+                .panel-title Login
+                    a.pull-right.small(ui-sref="register") Not Registered?
+
+            .panel-body
+                form#loginFrm.form-horizontal(role="form", name="loginFrm", novalidate="", ng-submit="login()")
+                    .input-group
+                        span.input-group-addon: i.glyphicon.glyphicon-user
+                        input#email.form-control(
+                            type="email"
+                            placeholder="your_email@example.com"
+                            name="email"
+                            required=""
+                            ng-model="email")
+                        p.text-danger(ng-show="loginFrm.email.$dirty && loginFrm.email.$invalid")
+                            | Please enter a valid email
+
+                    .input-group
+                        span.input-group-addon: i.glyphicon.glyphicon-lock
+                        input#pass.form-control(
+                            type="password"
+                            placeholder="Password"
+                            name="pass"
+                            required=""
+                            ng-model="pass")
+                            
+                    .buttons
+                        input.btn.btn-block.btn-info(type="submit", value="Login", ng-disabled="loginFrm.$invalid")
+                .buttons
+                    p.strike or
+                    button.btn.btn-block.btn-primary(ng-click="facebookLogin()") Login with Facebook
+                    

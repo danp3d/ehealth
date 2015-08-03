@@ -1,0 +1,64 @@
+.panel.panel-default
+    .row
+        .col-md-8.col-md-offset-2
+            h3 Treino
+            p Total de hoje: {{calculateTotalCaloriesForToday()}} KCal
+    
+            hr
+            h3 Inserir novo treino
+    form#trainFrm.form-horizontal(role="form", name="trainFrm", novalidate="", ng-submit="insertTrain()")
+        .row
+            fieldset.col-md-4.col-md-offset-2
+                .control-group
+                    label(for="type") Tipo
+                    select#type.form-control(ng-model="newTrain.type", ng-options="type.id as type.title for type in types")
+            fieldset.col-md-4
+                .control-group
+                    label(for="duration") Duração (minutos)
+                    input#duration.form-control(
+                        type="number"
+                        min=0
+                        max=200
+                        placeholder="e.g. 30"
+                        required=""
+                        ng-model="newTrain.duration")
+        .row
+            fieldset.col-md-8.col-md-offset-2
+                .control-group
+                    label(for="intensity") Intensidade
+                    .input-group
+                        span.input-group-addon.keep-border 0
+                        input#intensity.progress-slider(
+                            type="range"
+                            min="0" 
+                            max="100"
+                            step="1"
+                            ng-model="newTrain.intensity")
+                        span.input-group-addon.keep-border 100
+                    .input-group
+                        span.input-group-addon {{translateWorkoutIntensity(newTrain.intensity, newTrain.type)}}
+        .row
+            fieldset.col-md-8.col-md-offset-2
+                .buttons
+                    input.btn.btn-block.btn-info(type="submit", value="Inserir", ng-disabled="loginFrm.$invalid")
+                    
+
+table.table.table-hover
+    thead
+        tr
+            th Data
+            th Tipo
+            th Duração
+            th Intensidade
+            th Gasto Calorico
+            th VO2%
+    tbody
+        tr(ng-repeat="train in training")
+            td {{train.train_date | date}}
+            td {{translateWorkoutType(train.type)}}
+            td {{train.durationMinutes}}
+            td {{translateWorkoutIntensity(train.intensity, train.type)}}
+            td {{calculateCalories(train.durationMinutes, train.intensity, train.type) + ' KCal'}}
+            td {{translateIntensityToVO2Max(train.intensity, train.type) + '%'}}
+            
+h4 Gasto total do dia: {{calculateTotalCaloriesForToday()}}

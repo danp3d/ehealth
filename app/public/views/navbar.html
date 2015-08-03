@@ -1,0 +1,21 @@
+
+<div ng-controller="navbarCtrl" class="nav-bar">
+  <div ng-if="isAuthenticated()" class="container">
+    <div class="row">
+      <div class="btn-group btn-group-justified">
+        <div class="btn-group"><a type="button" ui-sref="main" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-home"></span>
+            <p>Home</p></a></div>
+        <div class="btn-group"><a type="button" ui-sref="profile" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-user"></span>
+            <p>Perfil</p></a></div>
+        <div class="btn-group"><a type="button" ui-sref="training" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-heart"></span>
+            <p>Treino</p></a></div>
+        <div class="btn-group"><a type="button" ui-sref="diet" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-cutlery"></span>
+            <p>Dieta</p></a></div>
+        <div class="btn-group"><a type="button" ui-sref="logout" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-log-out"></span>
+            <p>Logout</p></a></div>
+        <div class="btn-group"><a type="button" ui-sref="settings" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-cog"></span>
+            <p>Settings</p></a></div>
+      </div>
+    </div>
+  </div>
+</div>

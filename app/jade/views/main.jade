@@ -1,0 +1,26 @@
+.row.user-menu-container.square.darkbg  
+    .col-md-12.user-details
+        .row.darkbg.white
+            .col-md-3.no-pad
+                .user-image
+                    img.img-responsive.thumbnail(src="img/profilepic.jpg")
+            .col-md-9.no-pad
+                .user-pad
+                    h3 Hello, {{user.name}}
+                    h4 #[span.glyphicon.glyphicon-scale &nbsp;] {{weight + 'Kg'}}
+                    h4 #[span.glyphicon.glyphicon-question-sign &nbsp;] {{bodyFat + '% gordura corporal'}}
+                    button.btn.btn-labeled.btn-info.square
+                        span.btn-label #[span.glyphicon.glyphicon-pencil] Atualizar
+            
+        
+        .row.overview
+            .col-md-4.user-pad.text-center
+                h3 PESO IDEAL
+                h4 {{idealWeight + 'Kg'}}
+            .col-md-4.user-pad.text-center
+                h3 META GORDURA
+                h4 {{bodyFatGoal + '%'}}
+            .col-md-4.user-pad.text-center
+                h3 MASSA MUSCULAR
+                h4 {{leanBodyMass + '% (' + lbmDescription + ')'}}
+        

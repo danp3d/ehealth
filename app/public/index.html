@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>eHealth - Health made easy</title>
+    <!-- inject:css-->
+    <link rel="stylesheet" href="dist/css/animate.css">
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+    <link rel="stylesheet" href="dist/css/toastr.css">
+    <!-- endinject-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- inject:js-->
+    <script src="dist/js/jquery.js"></script>
+    <script src="dist/js/bootstrap.js"></script>
+    <script src="dist/js/angular.js"></script>
+    <script src="dist/js/angular-animate.js"></script>
+    <script src="dist/js/angular-ui-router.js"></script>
+    <script src="dist/js/toastr.js"></script>
+    <script src="dist/js/ui-bootstrap-tpls.js"></script>
+    <!-- endinject-->
+    <script src="js/app.js"></script>
+    <!-- Services-->
+    <script src="js/services/utils.svc.js"></script>
+    <script src="js/services/user.svc.js"></script>
+    <script src="js/services/alert.svc.js"></script>
+    <script src="js/services/facebookAuth.svc.js"></script>
+    <script src="js/services/authToken.svc.js"></script>
+    <script src="js/services/authInterceptor.svc.js"></script>
+    <script src="js/services/spinnerInterceptor.svc.js"></script>
+    <script src="js/services/modal.svc.js"></script>
+    <script src="js/services/training.svc.js"></script>
+    <!-- Controllers-->
+    <script src="js/controllers/login.ctrl.js"></script>
+    <script src="js/controllers/logout.ctrl.js"></script>
+    <script src="js/controllers/navbar.ctrl.js"></script>
+    <script src="js/controllers/profile.ctrl.js"></script>
+    <script src="js/controllers/health.ctrl.js"></script>
+    <script src="js/controllers/training.ctrl.js"></script>
+    <script src="js/controllers/main.ctrl.js"></script>
+    <!-- Directives-->
+    <script src="js/directives/validateEquals.js"></script>
+    <script src="js/directives/fbLogin.js"></script>
+    <script src="js/directives/slider.js"></script>
+    <!-- Other utilities-->
+    <script src="js/utils.js"></script>
+  </head>
+  <body ng-app="ehealth">
+    <div ng-controller="navbarCtrl" class="nav-bar">
+      <div ng-if="isAuthenticated()" class="container">
+        <div class="row">
+          <div class="btn-group btn-group-justified">
+                <div class="btn-group"><a type="button" ui-sref="main" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-home"></span>
+                    <p>Home</p></a></div>
+                <div class="btn-group"><a type="button" ui-sref="profile" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-user"></span>
+                    <p>Perfil</p></a></div>
+                <div class="btn-group"><a type="button" ui-sref="training" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-heart"></span>
+                    <p>Treino</p></a></div>
+                <div class="btn-group"><a type="button" ui-sref="diet" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-cutlery"></span>
+                    <p>Dieta</p></a></div>
+                <div class="btn-group"><a type="button" ui-sref="logout" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-log-out"></span>
+                    <p>Logout</p></a></div>
+                <div class="btn-group"><a type="button" ui-sref="settings" ui-sref-active="active" class="btn btn-nav"><span class="glyphicon glyphicon-cog"></span>
+                    <p>Settings</p></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-cloak="" class="container">
+      <div id="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+      <div class="row">
+        <div class="ui-view-container">
+          <div ui-view=""></div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="container-fluid">
+        <p class="text-center">&copy; 2015 eHealth</p>
+      </div>
+    </footer>
+  </body>
+</html>

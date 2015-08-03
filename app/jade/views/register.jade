@@ -1,0 +1,71 @@
+.col-md-4.col-md-offset-4#login
+    .well
+        h2 eHealth
+        p Health made easy
+
+        .panel.panel-info
+            .panel-heading
+                .panel-title Register
+                    a.pull-right.small(ui-sref="login") Already Registered?
+
+            .panel-body
+                form#loginFrm.form-horizontal(role="form", name="loginFrm", novalidate="", ng-submit="register()")
+                    .control-group
+                        label(for="email") Email
+                        input#email.form-control(
+                            type="email"
+                            placeholder="seu_email@exemplo.com.br"
+                            name="email"
+                            required=""
+                            ng-model="email")
+                        p.text-danger(ng-show="loginFrm.email.$dirty && loginFrm.email.$invalid")
+                            | Email inválido
+
+                    .control-group
+                        label(for="pass") Senha
+                        input#pass.form-control(
+                            type="password"
+                            placeholder="Senha"
+                            name="pass"
+                            required=""
+                            ng-model="pass")
+
+                    .control-group
+                        label(for="passConfirm") Confirme Senha
+                        input#passConfirm.form-control(
+                            type="password"
+                            placeholder="Senha"
+                            name="passConfirm"
+                            required=""
+                            ng-model="passConfirm"
+                            validate-equals="pass")
+                        p.text-danger(ng-show="loginFrm.passConfirm.$dirty && loginFrm.passConfirm.$invalid") 
+                            | Senhas não conferem
+                            
+                    .control-group
+                        label(for="name") Nome
+                        input#name.form-control(
+                            type="text"
+                            placeholder=""
+                            name="name"
+                            required=""
+                            ng-model="name")
+                            
+                    .control-group
+                        label(for="dob") Nascimento
+                        input#dob.form-control(
+                            type="date"
+                            placeholder=""
+                            name="dob"
+                            required=""
+                            ng-model="dob")
+
+                    .buttons
+                        input.btn.btn-block.btn-info(type="submit", value="Register", ng-disabled="loginFrm.$invalid")
+                        p.strike or
+                        .fb-login-button#fb_login_button(
+                            data-max-rows="1"
+                            data-size="large"
+                            data-show-faces="true"
+                            data-auto-logout-link="true"
+                            fb-login="")

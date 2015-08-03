@@ -1,0 +1,16 @@
+mixin menuItem(icon, text, sref, active)
+    .btn-group
+        a.btn.btn-nav(type="button", ui-sref=sref, ui-sref-active="active")
+            span(class="glyphicon glyphicon-" + icon)
+            p= text
+
+.nav-bar(ng-controller="navbarCtrl")
+    .container(ng-if="isAuthenticated()")
+        .row
+            .btn-group.btn-group-justified
+                +menuItem("home", "Home", "main", true)
+                +menuItem("user", "Perfil", "profile")
+                +menuItem("heart", "Treino", "training")
+                +menuItem("cutlery", "Dieta", "diet")
+                +menuItem("log-out", "Logout", "logout")
+                +menuItem("cog", "Settings", "settings")

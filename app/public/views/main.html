@@ -1,0 +1,32 @@
+
+<div class="row user-menu-container square darkbg"> 
+  <div class="col-md-12 user-details">
+    <div class="row darkbg white">
+      <div class="col-md-3 no-pad">
+        <div class="user-image"><img src="img/profilepic.jpg" class="img-responsive thumbnail"/></div>
+      </div>
+      <div class="col-md-9 no-pad">
+        <div class="user-pad">
+          <h3>Hello, {{user.name}}</h3>
+          <h4><span class="glyphicon glyphicon-scale">&nbsp;</span> {{weight + 'Kg'}}</h4>
+          <h4><span class="glyphicon glyphicon-question-sign">&nbsp;</span> {{bodyFat + '% gordura corporal'}}</h4>
+          <button class="btn btn-labeled btn-info square"><span class="btn-label"><span class="glyphicon glyphicon-pencil"></span> Atualizar</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="row overview">
+      <div class="col-md-4 user-pad text-center">
+        <h3>PESO IDEAL</h3>
+        <h4>{{idealWeight + 'Kg'}}</h4>
+      </div>
+      <div class="col-md-4 user-pad text-center">
+        <h3>META GORDURA</h3>
+        <h4>{{bodyFatGoal + '%'}}</h4>
+      </div>
+      <div class="col-md-4 user-pad text-center">
+        <h3>MASSA MUSCULAR</h3>
+        <h4>{{leanBodyMass + '% (' + lbmDescription + ')'}}</h4>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.modal-header
+  h3 {{modalOptions.headerText}}
+
+.modal-body
+  p {{modalOptions.bodyText}}
+  
+.modal-footer
+  button.btn.ng-hide(
+      type="button", 
+      data-ng-click="modalOptions.close()"
+      data-ng-hide="modalOptions.hideCloseButton") {{modalOptions.closeButtonText}}
+  button.btn.btn-primary(data-ng-click="modalOptions.ok();") {{modalOptions.actionButtonText}}

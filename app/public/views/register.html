@@ -1,0 +1,46 @@
+
+<div id="login" class="col-md-4 col-md-offset-4">
+  <div class="well">
+    <h2>eHealth</h2>
+    <p>Health made easy</p>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="panel-title">Register<a ui-sref="login" class="pull-right small">Already Registered?</a></div>
+      </div>
+      <div class="panel-body">
+        <form id="loginFrm" role="form" name="loginFrm" novalidate="" ng-submit="register()" class="form-horizontal">
+          <div class="control-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="seu_email@exemplo.com.br" name="email" required="" ng-model="email" class="form-control"/>
+            <p ng-show="loginFrm.email.$dirty &amp;&amp; loginFrm.email.$invalid" class="text-danger">Email inválido</p>
+          </div>
+          <div class="control-group">
+            <label for="pass">Senha</label>
+            <input id="pass" type="password" placeholder="Senha" name="pass" required="" ng-model="pass" class="form-control"/>
+          </div>
+          <div class="control-group">
+            <label for="passConfirm">Confirme Senha</label>
+            <input id="passConfirm" type="password" placeholder="Senha" name="passConfirm" required="" ng-model="passConfirm" validate-equals="pass" class="form-control"/>
+            <p ng-show="loginFrm.passConfirm.$dirty &amp;&amp; loginFrm.passConfirm.$invalid" class="text-danger">
+               
+              Senhas não conferem
+            </p>
+          </div>
+          <div class="control-group">
+            <label for="name">Nome</label>
+            <input id="name" type="text" placeholder="" name="name" required="" ng-model="name" class="form-control"/>
+          </div>
+          <div class="control-group">
+            <label for="dob">Nascimento</label>
+            <input id="dob" type="date" placeholder="" name="dob" required="" ng-model="dob" class="form-control"/>
+          </div>
+          <div class="buttons">
+            <input type="submit" value="Register" ng-disabled="loginFrm.$invalid" class="btn btn-block btn-info"/>
+            <p class="strike">or</p>
+            <div id="fb_login_button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true" fb-login="" class="fb-login-button"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

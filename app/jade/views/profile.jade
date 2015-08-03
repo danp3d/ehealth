@@ -1,0 +1,236 @@
+.well
+    h2 Perfil
+    form#loginFrm.form-horizontal(role="form", name="profileFrm", novalidate="", ng-submit="updateProfile()")
+        h3 Sobre Você
+        .row
+            fieldset.col-md-6
+                .control-group
+                    label(for="email") Email
+                    input#email.form-control(
+                        type="email"
+                        placeholder="seu_email@exemplo.com.br"
+                        name="email"
+                        required=""
+                        ng-model="user.email"
+                        readonly="true")
+                    p.text-danger(ng-show="loginFrm.email.$dirty && loginFrm.email.$invalid")
+                        | Email inválido
+
+                .control-group
+                    label(for="name") Nome
+                    input#name.form-control(
+                        type="text"
+                        placeholder=""
+                        name="name"
+                        required=""
+                        ng-model="user.name")
+
+                .control-group
+                    label(for="dob") Nascimento
+                    .input-group
+                        input#dob.form-control(
+                            type="date"
+                            placeholder=""
+                            name="dob"
+                            required=""
+                            ng-model="user.dob")
+                        span.input-group-addon {{ getAgeYears() }} anos, {{ getAgeMonths() }} meses e {{ getAgeDays() }} dias
+                
+            fieldset.col-md-6
+                .control-group
+                    label(for="height") Altura (cm)
+                    input#height.form-control(
+                        type="number"
+                        min=1
+                        max=300
+                        placeholder="e.g. 173"
+                        required=""
+                        ng-model="user.height")
+
+                .control-group
+                    label(for="weight") Peso (kg)
+                    input#weight.form-control(
+                        type="number"
+                        min=1
+                        max=300
+                        placeholder="e.g. 73"
+                        required=""
+                        ng-model="user.weight")
+
+                .control-group
+                    label(for="activityFactor") Nível de esforço diario (sem treino) &nbsp;
+                        span.glyphicon.glyphicon-question-sign.help(ng-click="showActiviryFactorHelp()")
+                    .input-group
+                        span.input-group-addon.keep-border 1.1
+                        input#activityFactor.progress-slider(
+                            type="range" 
+                            min="1.1" 
+                            max="2.4"
+                            step="0.1"
+                            ng-model="user.activityFactor")
+                        span.input-group-addon.keep-border 2.4
+                    .input-group
+                        span.input-group-addon {{translateActivityFactor(user.activityFactor)}}
+        .row
+            fieldset.col-md-6
+                .control-group
+                    label(for="objective") Sexo
+                    
+                    .input-group#objective
+                        span.input-group-addon.keep-border Masculino                            
+                            input(
+                                type="radio"
+                                ng-model="user.sex"
+                                value="m")
+                        span.input-group-addon.keep-border Feminino
+                            input(
+                                type="radio"
+                                ng-model="user.sex"
+                                value="f")
+                                
+            fieldset.col-md-6
+                .control-group
+                    label(for="bodyFat") Percentual de gordura
+                    input#bodyFat.form-control(
+                        type="number"
+                        min=0
+                        max=100
+                        placeholder="e.g. 30"
+                        required=""
+                        ng-model="user.bodyFat")
+                    
+                        
+
+        h3 Sobre seu treino
+        .row
+            fieldset.col-md-6
+                .control-group
+                    label(for="workoutsPerWeek") Treinos por semana &nbsp;
+                        span.glyphicon.glyphicon-question-sign.help
+                    input#workoutsPerWeek.form-control(
+                        type="number"
+                        min=0
+                        max=200
+                        placeholder="e.g. 4"
+                        required=""
+                        ng-model="user.workout.timesPerWeek")
+        
+            fieldset.col-md-6
+                .control-group
+                    label(for="vo2Max") VO2 Maximo &nbsp;
+                        span.glyphicon.glyphicon-question-sign.help
+                    input#vo2Max.form-control(
+                        type="number"
+                        min=0
+                        max=90.99
+                        placeholder="e.g. 36.40"
+                        required=""
+                        ng-model="user.vo2Max")
+                
+        .row
+            fieldset.col-md-6
+                 .control-group
+                    label(for="systolicBloodPressure") Pressão arterial &nbsp;
+                        span.glyphicon.glyphicon-question-sign.help
+                    .input-group
+                        span.input-group-addon Máxima
+                        input#systolicBloodPressure.form-control(
+                            type="number"
+                            min="0" 
+                            max="500"
+                            step="1"
+                            ng-model="user.bloodPressure.systolic")
+                        span.input-group-addon Mínima
+                        input#diastolicBloodPressure.form-control(
+                            type="number"
+                            min="0" 
+                            max="500"
+                            step="1"
+                            ng-model="user.bloodPressure.diastolic")                
+                        
+            fieldset.col-md-6
+                .control-group
+                    label(for="restCF") Frequência cardíaca de repouso &nbsp;
+                        span.glyphicon.glyphicon-question-sign.help
+                    input#restCF.form-control(
+                        type="number"
+                        min=0
+                        max=300
+                        placeholder="e.g. 70"
+                        required=""
+                        ng-model="user.restCF")
+            
+        .row
+            fieldset.col-md-6
+                .control-group
+                    label(for="workoutDuration") Duração do treino cardiovascular (aeróbico) em minutos
+                    input#workoutDuration.form-control(
+                        type="number"
+                        min=0
+                        max=200
+                        placeholder="e.g. 30"
+                        required=""
+                        ng-model="user.workout.cardio.duration")
+            fieldset.col-md-6
+                .control-group
+                    label(for="workoutDuration") Duração do treino de força (anaeróbico) em minutos
+                    input#workoutDuration.form-control(
+                        type="number"
+                        min=0
+                        max=200
+                        placeholder="e.g. 30"
+                        required=""
+                        ng-model="user.workout.strength.duration")
+        .row
+            fieldset.col-md-6
+                .control-group
+                    label(for="workoutIntensityCardio") Intensidade do treino cardiovascular (aeróbico) &nbsp;
+                        span.glyphicon.glyphicon-question-sign.help
+                    .input-group
+                        span.input-group-addon.keep-border 0
+                        input#workoutIntensity.progress-slider(
+                            type="range"
+                            min="0" 
+                            max="100"
+                            step="1"
+                            ng-model="user.workout.cardio.intensity")
+                        span.input-group-addon.keep-border 100
+                    .input-group
+                        span.input-group-addon {{translateWorkoutIntensity(user.workout.cardio.intensity)}}
+            
+            fieldset.col-md-6
+                .control-group
+                    label(for="workoutIntensityStrength") Intensidade do treino de força (anaeróbico) &nbsp;
+                        span.glyphicon.glyphicon-question-sign.help
+                    .input-group
+                        span.input-group-addon.keep-border 0
+                        input#workoutIntensity.progress-slider(
+                            type="range"
+                            min="0" 
+                            max="100"
+                            step="1"
+                            ng-model="user.workout.strength.intensity")
+                        span.input-group-addon.keep-border 100
+                    .input-group
+                        span.input-group-addon {{translateWorkoutIntensity(user.workout.strength.intensity, 'strength')}}
+
+        h3 Meta
+        .row
+            fieldset.col-md-6
+                .control-group
+                    label(for="objective") Objetivo &nbsp;
+                        span.glyphicon.glyphicon-question-sign.help
+                    .input-group#objective
+                        span.input-group-addon.keep-border Aumentar massa muscular                            
+                            input(
+                                type="radio"
+                                ng-model="user.objective"
+                                value="gain")
+                        span.input-group-addon.keep-border Diminuir % de gordura
+                            input(
+                                type="radio"
+                                ng-model="user.objective"
+                                value="loss")
+        .buttons
+            input.btn.btn-block.btn-info(type="submit", value="Save", ng-disabled="loginFrm.$invalid")
+

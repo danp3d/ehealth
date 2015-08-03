@@ -1,0 +1,68 @@
+
+<div class="panel panel-default">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h3>Treino</h3>
+      <p>Total de hoje: {{calculateTotalCaloriesForToday()}} KCal</p>
+      <hr/>
+      <h3>Inserir novo treino</h3>
+    </div>
+  </div>
+  <form id="trainFrm" role="form" name="trainFrm" novalidate="" ng-submit="insertTrain()" class="form-horizontal">
+    <div class="row">
+      <fieldset class="col-md-4 col-md-offset-2">
+        <div class="control-group">
+          <label for="type">Tipo</label>
+          <select id="type" ng-model="newTrain.type" ng-options="type.id as type.title for type in types" class="form-control"></select>
+        </div>
+      </fieldset>
+      <fieldset class="col-md-4">
+        <div class="control-group">
+          <label for="duration">Duração (minutos)</label>
+          <input id="duration" type="number" min="0" max="200" placeholder="e.g. 30" required="" ng-model="newTrain.duration" class="form-control"/>
+        </div>
+      </fieldset>
+    </div>
+    <div class="row">
+      <fieldset class="col-md-8 col-md-offset-2">
+        <div class="control-group">
+          <label for="intensity">Intensidade</label>
+          <div class="input-group"><span class="input-group-addon keep-border">0</span>
+            <input id="intensity" type="range" min="0" max="100" step="1" ng-model="newTrain.intensity" class="progress-slider"/><span class="input-group-addon keep-border">100</span>
+          </div>
+          <div class="input-group"><span class="input-group-addon">{{translateWorkoutIntensity(newTrain.intensity, newTrain.type)}}</span></div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="row">
+      <fieldset class="col-md-8 col-md-offset-2">
+        <div class="buttons">
+          <input type="submit" value="Inserir" ng-disabled="loginFrm.$invalid" class="btn btn-block btn-info"/>
+        </div>
+      </fieldset>
+    </div>
+  </form>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Tipo</th>
+      <th>Duração</th>
+      <th>Intensidade</th>
+      <th>Gasto Calorico</th>
+      <th>VO2%</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="train in training">
+      <td>{{train.train_date | date}}</td>
+      <td>{{translateWorkoutType(train.type)}}</td>
+      <td>{{train.durationMinutes}}</td>
+      <td>{{translateWorkoutIntensity(train.intensity, train.type)}}</td>
+      <td>{{calculateCalories(train.durationMinutes, train.intensity, train.type) + ' KCal'}}</td>
+      <td>{{translateIntensityToVO2Max(train.intensity, train.type) + '%'}}</td>
+    </tr>
+  </tbody>
+</table>
+<h4>Gasto total do dia: {{calculateTotalCaloriesForToday()}}</h4>
