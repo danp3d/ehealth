@@ -178,10 +178,8 @@
           to: resCF.to * (intensity / 100) + restCF
         };
       },
-      calculateCalories: function(vo2L, intensity, workoutDuration, type) {
-        var cals, correction, vo2MaxPercent;
-        vo2MaxPercent = this.translateIntensityToVO2Max(intensity, type);
-        cals = vo2L * vo2MaxPercent * 5 * workoutDuration;
+      getCorrection: function(type, cals, vo2MaxPercent) {
+        var correction;
         if (type === 'cardio') {
           correction = 0;
         }
@@ -192,6 +190,13 @@
             correction = cals * 0.25;
           }
         }
+        return correction;
+      },
+      calculateCalories: function(vo2L, intensity, workoutDuration, type) {
+        var cals, correction, vo2MaxPercent;
+        vo2MaxPercent = this.translateIntensityToVO2Max(intensity, type);
+        cals = vo2L * vo2MaxPercent * 5 * workoutDuration;
+        correction = this.getCorrection(type, cals, vo2MaxPercent);
         return cals - correction;
       },
       calculateBasalMetabolicRate: function(weight, height, dob, sex) {
@@ -208,6 +213,242 @@
       },
       calculateTotalMetabolicRate: function(dailyMetabolicRate, caloriesSpentWithWorkouts) {
         return dailyMetabolicRate + caloriesSpentWithWorkouts;
+      },
+      getIdealBodyFatRate: function() {
+        if (sex === 'f') {
+          if (age <= 25) {
+            return 19;
+          } else if (age <= 35) {
+            return 20;
+          } else if (age <= 45) {
+            return 23;
+          } else if (age <= 55) {
+            return 25;
+          } else {
+            return 26;
+          }
+        } else {
+          if (age <= 25) {
+            return 10;
+          } else if (age <= 35) {
+            return 15;
+          } else if (age <= 45) {
+            return 18;
+          } else if (age <= 55) {
+            return 20;
+          } else {
+            return 21;
+          }
+        }
+      },
+      rateBodyFatPerAge: function(bodyFat, dob, sex) {
+        var age;
+        age = getAgeYears(dob);
+        if (sex === 'f') {
+          if (age <= 25) {
+            if (bodyFat <= 16) {
+              return 'excellent';
+            }
+            if (bodyFat <= 19) {
+              return 'good';
+            }
+            if (bodyFat <= 22) {
+              return 'average+';
+            }
+            if (bodyFat <= 25) {
+              return 'average';
+            }
+            if (bodyFat <= 28) {
+              return 'average-';
+            }
+            if (bodyFat <= 31) {
+              return 'bad';
+            }
+            return 'worse';
+          } else if (age <= 35) {
+            if (bodyFat <= 16) {
+              return 'excellent';
+            }
+            if (bodyFat <= 20) {
+              return 'good';
+            }
+            if (bodyFat <= 23) {
+              return 'average+';
+            }
+            if (bodyFat <= 25) {
+              return 'average';
+            }
+            if (bodyFat <= 29) {
+              return 'average-';
+            }
+            if (bodyFat <= 33) {
+              return 'bad';
+            }
+            return 'worse';
+          } else if (age <= 45) {
+            if (bodyFat <= 19) {
+              return 'excellent';
+            }
+            if (bodyFat <= 23) {
+              return 'good';
+            }
+            if (bodyFat <= 26) {
+              return 'average+';
+            }
+            if (bodyFat <= 29) {
+              return 'average';
+            }
+            if (bodyFat <= 32) {
+              return 'average-';
+            }
+            if (bodyFat <= 36) {
+              return 'bad';
+            }
+            return 'worse';
+          } else if (age <= 55) {
+            if (bodyFat <= 21) {
+              return 'excellent';
+            }
+            if (bodyFat <= 25) {
+              return 'good';
+            }
+            if (bodyFat <= 28) {
+              return 'average+';
+            }
+            if (bodyFat <= 31) {
+              return 'average';
+            }
+            if (bodyFat <= 34) {
+              return 'average-';
+            }
+            if (bodyFat <= 38) {
+              return 'bad';
+            }
+            return 'worse';
+          } else {
+            if (bodyFat <= 22) {
+              return 'excellent';
+            }
+            if (bodyFat <= 26) {
+              return 'good';
+            }
+            if (bodyFat <= 29) {
+              return 'average+';
+            }
+            if (bodyFat <= 32) {
+              return 'average';
+            }
+            if (bodyFat <= 35) {
+              return 'average-';
+            }
+            if (bodyFat <= 38) {
+              return 'bad';
+            }
+            return 'worse';
+          }
+        } else {
+          if (age <= 25) {
+            if (bodyFat <= 6) {
+              return 'excellent';
+            }
+            if (bodyFat <= 10) {
+              return 'good';
+            }
+            if (bodyFat <= 13) {
+              return 'average+';
+            }
+            if (bodyFat <= 16) {
+              return 'average';
+            }
+            if (bodyFat <= 20) {
+              return 'average-';
+            }
+            if (bodyFat <= 24) {
+              return 'bad';
+            }
+            return 'worse';
+          } else if (age <= 35) {
+            if (bodyFat <= 11) {
+              return 'excellent';
+            }
+            if (bodyFat <= 15) {
+              return 'good';
+            }
+            if (bodyFat <= 18) {
+              return 'average+';
+            }
+            if (bodyFat <= 20) {
+              return 'average';
+            }
+            if (bodyFat <= 24) {
+              return 'average-';
+            }
+            if (bodyFat <= 28) {
+              return 'bad';
+            }
+            return 'worse';
+          } else if (age <= 45) {
+            if (bodyFat <= 14) {
+              return 'excellent';
+            }
+            if (bodyFat <= 18) {
+              return 'good';
+            }
+            if (bodyFat <= 21) {
+              return 'average+';
+            }
+            if (bodyFat <= 23) {
+              return 'average';
+            }
+            if (bodyFat <= 25) {
+              return 'average-';
+            }
+            if (bodyFat <= 29) {
+              return 'bad';
+            }
+            return 'worse';
+          } else if (age <= 55) {
+            if (bodyFat <= 16) {
+              return 'excellent';
+            }
+            if (bodyFat <= 20) {
+              return 'good';
+            }
+            if (bodyFat <= 23) {
+              return 'average+';
+            }
+            if (bodyFat <= 25) {
+              return 'average';
+            }
+            if (bodyFat <= 27) {
+              return 'average-';
+            }
+            if (bodyFat <= 30) {
+              return 'bad';
+            }
+            return 'worse';
+          } else {
+            if (bodyFat <= 18) {
+              return 'excellent';
+            }
+            if (bodyFat <= 21) {
+              return 'good';
+            }
+            if (bodyFat <= 23) {
+              return 'average+';
+            }
+            if (bodyFat <= 25) {
+              return 'average';
+            }
+            if (bodyFat <= 27) {
+              return 'average-';
+            }
+            if (bodyFat <= 30) {
+              return 'bad';
+            }
+            return 'worse';
+          }
+        }
       },
       calculateLeanMass: function(weight, bodyFat) {
         return ((100 - bodyFat) / 100) * weight;
@@ -238,6 +479,111 @@
           "carbs": parseFloat(carbs).toFixed(3)
         };
         return toReturn;
+      },
+      calculateBodyFatKg: function(weight, bodyFat) {
+        return (bodyFat / 100) * weight;
+      },
+      calculateIdealWeight: function(leanBodyMass, idealBodyFat) {
+        return leanBodyMass / (1 - (idealBodyFat / 100));
+      },
+      calculateExceedingFatkg: function(bodyFat, idealBodyFat, weight) {
+        return ((bodyFat - idealBodyFat) * weight) / 100;
+      },
+      calculateLeanBodyMassRate: function(bodyFat, weight) {
+        return (100 - bodyFat) / 100 * weight;
+      },
+      calculateLeanBodyMass: function(leanBodyMassRate, weight) {
+        return (leanBodyMassRate / 100) * weight;
+      },
+      rateLeanBodyMassRate: function(leanBodyMassRate, sex) {
+        if (sex === 'f') {
+          if (leanBodyMassRate < 77) {
+            return 'bad';
+          }
+          if (leanBodyMassRate === 77) {
+            return 'average';
+          }
+          if (leanBodyMassRate >= 78) {
+            return 'good';
+          }
+        } else {
+          if (leanBodyMassRate < 85) {
+            return 'bad';
+          }
+          if (leanBodyMassRate === 85) {
+            return 'average';
+          }
+          if (leanBodyMassRate >= 86) {
+            return 'good';
+          }
+        }
+        return void 0;
+      },
+      calculateMuscularNeed: function(leanBodyMassRate, sex) {
+        var idealLBMRate;
+        if (rateLeanBodyMassRate(leanBodyMassRate, sex) === 'good') {
+          return 0;
+        }
+        if (sex === 'f') {
+          idealLBMRate = 78;
+        } else {
+          idealLBMRate = 86;
+        }
+        return (idealLBMRate - leanBodyMassRate) * weight / 100;
+      },
+      rateBodyFat: function(bodyFat, sex) {
+        if (sex === 'f') {
+          if (bodyFat <= 10) {
+            return 'essential';
+          }
+          if (bodyFat > 10 && bodyFat <= 28) {
+            return 'health';
+          }
+          if (bodyFat > 28 && bodyFat <= 35) {
+            return 'risk';
+          }
+          if (bodyFat > 35) {
+            return 'obesity';
+          }
+        } else {
+          if (bodyFat <= 5) {
+            return 'essential';
+          }
+          if (bodyFat > 5 && bodyFat <= 20) {
+            return 'health';
+          }
+          if (bodyFat > 20 && bodyFat <= 25) {
+            return 'risk';
+          }
+          if (bodyFat > 25) {
+            return 'obesity';
+          }
+        }
+      },
+      calculateMonthsToTrain: function(exceedingFatKg, workoutsPerWeek, totalWorkoutCaloriesPerDay, caloriesToReduceOrInc) {
+        return ((exceedingFat * 1000) * 9) / (workoutsPerWeek * 52.2 / 12) * (totalWorkoutCaloriesPerDay + caloriesToReduceOrInc);
+      },
+      calculateNumberOfWorkouts: function(workoutsPerWeek, monthsToTrain) {
+        return (workoutsPerWeek * 52.2 / 12) * monthsToTrain;
+      },
+      suggestWeeklyCaloricExpenditure: function(weight) {
+        return weight * 2000 / 70;
+      },
+      suggestDailyCaloricExpenditure: function(weight) {
+        return this.suggestWeeklyCaloricExpenditure(weight) / 7;
+      },
+      suggestActivityCaloricExpenditure: function(weight) {
+        return weight * 300 / 70;
+      },
+      calculateSessionDuration: function(vo2MaxML, intensity, type, weight, caloriesToSpend) {
+        var calsMinute, met, rvo2, tgtVo2, vo2MaxPercent;
+        rvo2 = vo2MaxML - 3.5;
+        vo2MaxPercent = vo2MaxPercent = this.translateIntensityToVO2Max(intensity, type);
+        tgtVo2 = vo2MaxML * vo2MaxPercent + 3.5;
+        met = tgtVo2 / 3.5;
+        calsMinute = (met * 3.5 * weight) / 200;
+        calsMinute -= this.getCorrection(type, cals, vo2MaxPercent);
+        return caloriesToSpend / calsMinute;
       }
     };
   });

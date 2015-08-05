@@ -11,16 +11,36 @@
                     h4 #[span.glyphicon.glyphicon-question-sign &nbsp;] {{bodyFat + '% gordura corporal'}}
                     button.btn.btn-labeled.btn-info.square
                         span.btn-label #[span.glyphicon.glyphicon-pencil] Atualizar
-            
-        
+
+    
         .row.overview
-            .col-md-4.user-pad.text-center
-                h3 PESO IDEAL
-                h4 {{idealWeight + 'Kg'}}
-            .col-md-4.user-pad.text-center
-                h3 META GORDURA
-                h4 {{bodyFatGoal + '%'}}
-            .col-md-4.user-pad.text-center
-                h3 MASSA MUSCULAR
-                h4 {{leanBodyMass + '% (' + lbmDescription + ')'}}
+            h2 Posição atual
+        .row.overview
+            .col-md-3.user-pad.text-center
+                h3 Programado
+                h4 Diario: {{suggestedDailyCals + 'KCal'}}
+                h4 Semanal: {{suggestedWeeklyCals + 'KCal'}}
+            .col-md-3.user-pad.text-center
+                h3 Ingerido
+                h4 Diario: {{suggestedDailyCals + 'KCal'}}
+                h4 Semanal: {{suggestedWeeklyCals + 'KCal'}}
+            .col-md-3.user-pad.text-center
+                h3 Gasto
+                h4 Diario: {{actualDailyCals + 'KCal'}}
+                h4 Semanal: {{actualWeeklyCals + 'KCal'}}
+            .col-md-3.user-pad.text-center
+                h3 Resultado
+                h4 Diario: {{actualDailyCals + 'KCal'}}
+                h4 Semanal: {{actualWeeklyCals + 'KCal'}}
         
+
+article.row.user-menu-container.square
+    .row.overview
+        h2 Periodização do treino
+    .row.overview
+        .col-md-3.text-center
+            h3 Sugestão
+            h4 Cardio: 45 minutos
+            h4 Força: 32 minutos
+        .col-md-3.text-center
+            

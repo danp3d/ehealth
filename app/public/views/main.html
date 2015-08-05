@@ -15,18 +15,42 @@
       </div>
     </div>
     <div class="row overview">
-      <div class="col-md-4 user-pad text-center">
-        <h3>PESO IDEAL</h3>
-        <h4>{{idealWeight + 'Kg'}}</h4>
+      <h2>Posição atual</h2>
+    </div>
+    <div class="row overview">
+      <div class="col-md-3 user-pad text-center">
+        <h3>Programado</h3>
+        <h4>Diario: {{suggestedDailyCals + 'KCal'}}</h4>
+        <h4>Semanal: {{suggestedWeeklyCals + 'KCal'}}</h4>
       </div>
-      <div class="col-md-4 user-pad text-center">
-        <h3>META GORDURA</h3>
-        <h4>{{bodyFatGoal + '%'}}</h4>
+      <div class="col-md-3 user-pad text-center">
+        <h3>Ingerido</h3>
+        <h4>Diario: {{suggestedDailyCals + 'KCal'}}</h4>
+        <h4>Semanal: {{suggestedWeeklyCals + 'KCal'}}</h4>
       </div>
-      <div class="col-md-4 user-pad text-center">
-        <h3>MASSA MUSCULAR</h3>
-        <h4>{{leanBodyMass + '% (' + lbmDescription + ')'}}</h4>
+      <div class="col-md-3 user-pad text-center">
+        <h3>Gasto</h3>
+        <h4>Diario: {{actualDailyCals + 'KCal'}}</h4>
+        <h4>Semanal: {{actualWeeklyCals + 'KCal'}}</h4>
+      </div>
+      <div class="col-md-3 user-pad text-center">
+        <h3>Resultado</h3>
+        <h4>Diario: {{actualDailyCals + 'KCal'}}</h4>
+        <h4>Semanal: {{actualWeeklyCals + 'KCal'}}</h4>
       </div>
     </div>
   </div>
 </div>
+<article class="row user-menu-container square">
+  <div class="row overview">
+    <h2>Periodização do treino</h2>
+  </div>
+  <div class="row overview">
+    <div class="col-md-3 text-center">
+      <h3>Sugestão</h3>
+      <h4>Cardio: 45 minutos</h4>
+      <h4>Força: 32 minutos</h4>
+    </div>
+    <div class="col-md-3 text-center"></div>
+  </div>
+</article>

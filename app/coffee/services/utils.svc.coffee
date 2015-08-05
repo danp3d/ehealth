@@ -34,6 +34,7 @@ angular.module 'ehealth'
             
             return descr
             
+        # Intensity -> VO2 Max
         translateIntensityToVO2Max: (intensity, type, dob) ->
             return (intensity / 100) if type == 'cardio'
 
@@ -77,17 +78,18 @@ angular.module 'ehealth'
                 
             return descr
             
-        
+        # Get workout type name
         translateWorkoutType: (type) ->
             return 'Cardiovascular (aeróbico)' if type == 'cardio'
             return 'Força (anaeróbico)' if type == 'strength'
             
             return '';
             
-            
+        # VO2 liters to ml
         convertVO2MlToL: (vo2Ml, bodyWeight) ->
             vo2Ml * bodyWeight / 1000
             
+        # Maximum Cardio Frequency
         getMaxCF: (age) ->
             cfMax = 220 - age
             difference = 10 if age <= 25
@@ -97,6 +99,7 @@ angular.module 'ehealth'
                 from: (cfMax-difference)
                 to: (cfMax+difference)
     
+        # Maximum cardio frequency -> 
         convertMaxCFtoResCF: (maxCF, restCF) ->
             cf = 
                 from: maxCF.from - restCF
@@ -107,16 +110,20 @@ angular.module 'ehealth'
                 from: resCF.from * (intensity / 100) + restCF
                 to: resCF.to * (intensity / 100) + restCF
 
-        calculateCalories: (vo2L, intensity, workoutDuration, type) ->
-            vo2MaxPercent = @translateIntensityToVO2Max intensity, type
-            cals = vo2L * vo2MaxPercent * 5 * workoutDuration
+        getCorrection: (type, cals, vo2MaxPercent) ->
             correction = 0 if type == 'cardio'
             if type == 'strength'
                 if vo2MaxPercent > 0.45 
                     correction = cals * 0.06
                 else if vo2MaxPercent <= 0.45 and vo2MaxPercent > 0.29
                     correction = cals * 0.25
-            
+                    
+            return correction
+
+        calculateCalories: (vo2L, intensity, workoutDuration, type) ->
+            vo2MaxPercent = @translateIntensityToVO2Max intensity, type
+            cals = vo2L * vo2MaxPercent * 5 * workoutDuration
+            correction = @getCorrection type, cals, vo2MaxPercent
             return cals - correction
             
         calculateBasalMetabolicRate: (weight, height, dob, sex) ->
@@ -334,3 +341,15 @@ angular.module 'ehealth'
             
         suggestActivityCaloricExpenditure: (weight) ->
             return weight * 300 / 70
+            
+        calculateSessionDuration: (vo2MaxML, intensity, type, weight, caloriesToSpend) ->
+            rvo2 = vo2MaxML - 3.5
+            vo2MaxPercent = vo2MaxPercent = @translateIntensityToVO2Max intensity, type
+            tgtVo2 = vo2MaxML * vo2MaxPercent + 3.5
+            met = tgtVo2 / 3.5
+            calsMinute = (met * 3.5 * weight) / 200
+            calsMinute -= @getCorrection type, cals, vo2MaxPercent
+            
+            return caloriesToSpend / calsMinute
+        
+        
