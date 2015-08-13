@@ -14,7 +14,7 @@
   ],
     "author": "Daniel Pedroso",
     "license": "ISC",
-    "devDependencies": {
+    "dependencies": {
         "gulp": "~3.8.11",
         "gulp-coffee": "~2.3.1",
         "gulp-jade": "~1.0.0",
