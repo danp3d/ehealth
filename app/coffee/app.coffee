@@ -18,7 +18,7 @@ angular.module('ehealth', ['ui.router', 'ui.bootstrap', 'ngAnimate'])
     .constant 'API_BASE_URL', 'http://192.168.0.17:3030/api/'
 
     # Configure the app
-    .config ($stateProvider, $httpProvider, $windowProvider) ->
+    .config ($stateProvider, $httpProvider, $windowProvider, $urlRouterProvider) ->
         # States (routes)
         $stateProvider
             .state 'register',
@@ -49,6 +49,9 @@ angular.module('ehealth', ['ui.router', 'ui.bootstrap', 'ngAnimate'])
                 url: '/'
                 templateUrl: 'views/main.html'
                 controller: 'mainCtrl'
+        
+        $urlRouterProvider.when '', '/'
+        $urlRouterProvider.otherwise '/'
                 
         # Show the spinner once a http request starts
         $httpProvider.defaults.transformRequest.push (data, headersGetter) ->
