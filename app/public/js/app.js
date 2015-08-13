@@ -23,7 +23,7 @@
 
   /* Angular APP settings */
 
-  angular.module('ehealth', ['ui.router', 'ui.bootstrap', 'ngAnimate']).constant('API_BASE_URL', 'http://192.168.0.17:3030/api/').config(function($stateProvider, $httpProvider, $windowProvider) {
+  angular.module('ehealth', ['ui.router', 'ui.bootstrap', 'ngAnimate']).constant('API_BASE_URL', 'http://virtualtrainer.herokuapp.com/api/').config(function($stateProvider, $httpProvider, $windowProvider, $urlRouterProvider) {
     $stateProvider.state('register', {
       url: '/register',
       templateUrl: 'views/register.html',
@@ -48,6 +48,8 @@
       templateUrl: 'views/main.html',
       controller: 'mainCtrl'
     });
+    $urlRouterProvider.when('', '/');
+    $urlRouterProvider.otherwise('/');
     $httpProvider.defaults.transformRequest.push(function(data, headersGetter) {
       $('#spinner').hide();
       return data;
