@@ -120,6 +120,8 @@ angular.module 'ehealth'
                     correction = cals * 0.06
                 else if vo2MaxPercent <= 0.45 and vo2MaxPercent > 0.29
                     correction = cals * 0.25
+                else
+                    correction = 0
                     
             return correction
 
@@ -129,6 +131,43 @@ angular.module 'ehealth'
             cals = vo2L * vo2MaxPercent * 5 * workoutDuration
             correction = @getCorrection type, cals, vo2MaxPercent
             return cals - correction
+            
+        calculateCaloriesForUsr: (usr, workout) ->
+            vo2l = @convertVO2MlToL usr.vo2Max, usr.weight
+            cals = @calculateCalories vo2l, workout.intensity, workout.durationMinutes, workout.type
+            parseFloat cals.toFixed 3
+            
+        calculateCaloriesForDay: (usr, workouts, day) ->
+            return 0 if not workouts
+            self = this
+            day = day || new Date()
+        
+            total = 0
+            workouts.map (train) ->
+                curr = new Date day
+                trn = new Date Date.parse train.train_date
+                if trn.getFullYear() == curr.getFullYear() and trn.getMonth() == curr.getMonth() and trn.getDate() == curr.getDate()
+                    total += parseFloat self.calculateCaloriesForUsr usr, train
+                    
+            if total
+                parseFloat total.toFixed 3
+            else
+                0
+                
+        calculateCaloriesForWeek: (usr, workouts) ->
+            return 0 if not workouts
+            self = this
+            dt = new Date()
+            day = dt.getDay()
+            diff = dt.getDate() - day
+            dt = new Date dt.setDate diff
+            
+            total = 0
+            while dt <= new Date()
+                total += self.calculateCaloriesForDay usr, workouts, dt
+                dt = new Date dt.setDate dt.getDate() + 1
+                
+            return total
             
         # Basal metabolic rate (how many calories are spent just to live)
         calculateBasalMetabolicRate: (weight, height, dob, sex) ->
@@ -145,7 +184,7 @@ angular.module 'ehealth'
             
         # Total metabolic rate (daily MR + workouts)
         calculateTotalMetabolicRate: (dailyMetabolicRate, caloriesSpentWithWorkouts) ->
-            return dailyMetabolicRate + caloriesSpentWithWorkouts
+            return parseFloat(dailyMetabolicRate) + parseFloat(caloriesSpentWithWorkouts)
             
         # Ideal mody fat %
         getIdealBodyFatRate: () ->
@@ -375,7 +414,7 @@ angular.module 'ehealth'
             tgtVo2 = vo2MaxML * vo2MaxPercent + 3.5
             met = tgtVo2 / 3.5
             calsMinute = (met * 3.5 * weight) / 200
-            calsMinute -= @getCorrection type, cals, vo2MaxPercent
+            calsMinute -= @getCorrection type, calsMinute, vo2MaxPercent
             
             return caloriesToSpend / calsMinute
         

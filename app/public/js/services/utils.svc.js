@@ -188,6 +188,8 @@
             correction = cals * 0.06;
           } else if (vo2MaxPercent <= 0.45 && vo2MaxPercent > 0.29) {
             correction = cals * 0.25;
+          } else {
+            correction = 0;
           }
         }
         return correction;
@@ -198,6 +200,51 @@
         cals = vo2L * vo2MaxPercent * 5 * workoutDuration;
         correction = this.getCorrection(type, cals, vo2MaxPercent);
         return cals - correction;
+      },
+      calculateCaloriesForUsr: function(usr, workout) {
+        var cals, vo2l;
+        vo2l = this.convertVO2MlToL(usr.vo2Max, usr.weight);
+        cals = this.calculateCalories(vo2l, workout.intensity, workout.durationMinutes, workout.type);
+        return parseFloat(cals.toFixed(3));
+      },
+      calculateCaloriesForDay: function(usr, workouts, day) {
+        var self, total;
+        if (!workouts) {
+          return 0;
+        }
+        self = this;
+        day = day || new Date();
+        total = 0;
+        workouts.map(function(train) {
+          var curr, trn;
+          curr = new Date(day);
+          trn = new Date(Date.parse(train.train_date));
+          if (trn.getFullYear() === curr.getFullYear() && trn.getMonth() === curr.getMonth() && trn.getDate() === curr.getDate()) {
+            return total += parseFloat(self.calculateCaloriesForUsr(usr, train));
+          }
+        });
+        if (total) {
+          return parseFloat(total.toFixed(3));
+        } else {
+          return 0;
+        }
+      },
+      calculateCaloriesForWeek: function(usr, workouts) {
+        var day, diff, dt, self, total;
+        if (!workouts) {
+          return 0;
+        }
+        self = this;
+        dt = new Date();
+        day = dt.getDay();
+        diff = dt.getDate() - day;
+        dt = new Date(dt.setDate(diff));
+        total = 0;
+        while (dt <= new Date()) {
+          total += self.calculateCaloriesForDay(usr, workouts, dt);
+          dt = new Date(dt.setDate(dt.getDate() + 1));
+        }
+        return total;
       },
       calculateBasalMetabolicRate: function(weight, height, dob, sex) {
         var bmr;
@@ -212,7 +259,7 @@
         return parseFloat(basalMetabolicRate * activityFactor).toFixed(3);
       },
       calculateTotalMetabolicRate: function(dailyMetabolicRate, caloriesSpentWithWorkouts) {
-        return dailyMetabolicRate + caloriesSpentWithWorkouts;
+        return parseFloat(dailyMetabolicRate) + parseFloat(caloriesSpentWithWorkouts);
       },
       getIdealBodyFatRate: function() {
         if (sex === 'f') {
@@ -582,7 +629,7 @@
         tgtVo2 = vo2MaxML * vo2MaxPercent + 3.5;
         met = tgtVo2 / 3.5;
         calsMinute = (met * 3.5 * weight) / 200;
-        calsMinute -= this.getCorrection(type, cals, vo2MaxPercent);
+        calsMinute -= this.getCorrection(type, calsMinute, vo2MaxPercent);
         return caloriesToSpend / calsMinute;
       }
     };

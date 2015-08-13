@@ -23,16 +23,16 @@
                     h4 Semanal: {{totalWeeklyMetabolicRate + 'KCal'}}
                 .col-md-3.user-pad.text-center
                     h3 Ingerido
-                    h4 Diario: {{suggestedDailyCals + 'KCal'}}
-                    h4 Semanal: {{suggestedWeeklyCals + 'KCal'}}
+                    h4 Diario: {{ingestedCalsDay + 'KCal'}}
+                    h4 Semanal: {{ingestedCalsWeek + 'KCal'}}
                 .col-md-3.user-pad.text-center
                     h3 Gasto
-                    h4 Diario: {{actualDailyCals + 'KCal'}}
-                    h4 Semanal: {{actualWeeklyCals + 'KCal'}}
+                    h4 Diario: {{spentCalsDay + 'KCal'}}
+                    h4 Semanal: {{spentCalsWeek + 'KCal'}}
                 .col-md-3.user-pad.text-center
                     h3 Resultado
-                    h4 Diario: {{actualDailyCals + 'KCal'}}
-                    h4 Semanal: {{actualWeeklyCals + 'KCal'}}
+                    h4 Diario: {{resultsCalsDay + 'KCal'}}
+                    h4 Semanal: {{resultsCalsWeek + 'KCal'}}
 
 
     article.row.user-menu-container.square
@@ -49,8 +49,8 @@
                         min=0
                         max=100)
                     span.input-group-addon.keep-border %
-                h4 KCal
-                h4 Min
+                h4 {{periodization.cardioCalories}} KCal
+                h4 {{periodization.cardioMinutes}} Min
             .col-md-3.text-center
                 h3 Força
                 .input-group.space-bottom
@@ -61,5 +61,5 @@
                         min=0
                         max=100)
                     span.input-group-addon.keep-border %
-                h4 KCal
-                h4 Min
+                h4 {{periodization.strengthCalories}} KCal
+                h4 {{periodization.strengthMinutes}} Min

@@ -40,33 +40,17 @@
       return utilsSvc.translateWorkoutType(type);
     };
     $scope.calculateCalories = function(duration, intensity, type) {
-      var cals, vo2l;
-      vo2l = utilsSvc.convertVO2MlToL($scope.usr.vo2Max, $scope.usr.weight);
-      cals = utilsSvc.calculateCalories(vo2l, intensity, duration, type);
-      return parseFloat(cals.toFixed(3));
+      return utilsSvc.calculateCaloriesForUsr($scope.usr, {
+        durationMinutes: duration,
+        intensity: intensity,
+        type: type
+      });
     };
     $scope.translateIntensityToVO2Max = function(intensity, type) {
       return parseFloat(((utilsSvc.translateIntensityToVO2Max(intensity, type)) * 100).toFixed(3));
     };
     $scope.calculateTotalCaloriesForToday = function() {
-      var total;
-      if (!$scope.training) {
-        return 0;
-      }
-      total = 0;
-      $scope.training.map(function(train) {
-        var curr, trn;
-        curr = new Date();
-        trn = new Date(Date.parse(train.train_date));
-        if (trn.getFullYear() === curr.getFullYear() && trn.getMonth() === curr.getMonth() && trn.getDate() === curr.getDate()) {
-          return total += $scope.calculateCalories(train.durationMinutes, train.intensity, train.type);
-        }
-      });
-      if (total) {
-        return parseFloat(total.toFixed(3));
-      } else {
-        return 0;
-      }
+      return utilsSvc.calculateCaloriesForDay($scope.usr, $scope.training);
     };
     return $scope.insertTrain = function() {
       return trainingSvc.insertTrain($scope.newTrain.type, $scope.newTrain.duration, $scope.newTrain.intensity).success(function(result) {

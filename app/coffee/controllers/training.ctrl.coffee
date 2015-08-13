@@ -45,27 +45,13 @@ angular.module 'ehealth'
             utilsSvc.translateWorkoutType type
             
         $scope.calculateCalories = (duration, intensity, type) ->
-            vo2l = utilsSvc.convertVO2MlToL $scope.usr.vo2Max, $scope.usr.weight
-            cals = utilsSvc.calculateCalories vo2l, intensity, duration, type
-            parseFloat cals.toFixed 3
+            utilsSvc.calculateCaloriesForUsr $scope.usr, {durationMinutes: duration, intensity: intensity, type: type}
         
         $scope.translateIntensityToVO2Max = (intensity, type) ->
             parseFloat ((utilsSvc.translateIntensityToVO2Max intensity, type) * 100).toFixed 3
             
         $scope.calculateTotalCaloriesForToday = ->
-            return 0 if not $scope.training
-        
-            total = 0
-            $scope.training.map (train) ->
-                curr = new Date()
-                trn = new Date(Date.parse(train.train_date))
-                if trn.getFullYear() == curr.getFullYear() and trn.getMonth() == curr.getMonth() and trn.getDate() == curr.getDate()
-                    total += $scope.calculateCalories train.durationMinutes, train.intensity, train.type
-                    
-            if total
-                parseFloat total.toFixed 3
-            else
-                0
+            utilsSvc.calculateCaloriesForDay $scope.usr, $scope.training
             
         $scope.insertTrain = ->
             trainingSvc.insertTrain $scope.newTrain.type, $scope.newTrain.duration, $scope.newTrain.intensity

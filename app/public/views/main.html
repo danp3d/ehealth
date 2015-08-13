@@ -26,18 +26,18 @@
         </div>
         <div class="col-md-3 user-pad text-center">
           <h3>Ingerido</h3>
-          <h4>Diario: {{suggestedDailyCals + 'KCal'}}</h4>
-          <h4>Semanal: {{suggestedWeeklyCals + 'KCal'}}</h4>
+          <h4>Diario: {{ingestedCalsDay + 'KCal'}}</h4>
+          <h4>Semanal: {{ingestedCalsWeek + 'KCal'}}</h4>
         </div>
         <div class="col-md-3 user-pad text-center">
           <h3>Gasto</h3>
-          <h4>Diario: {{actualDailyCals + 'KCal'}}</h4>
-          <h4>Semanal: {{actualWeeklyCals + 'KCal'}}</h4>
+          <h4>Diario: {{spentCalsDay + 'KCal'}}</h4>
+          <h4>Semanal: {{spentCalsWeek + 'KCal'}}</h4>
         </div>
         <div class="col-md-3 user-pad text-center">
           <h3>Resultado</h3>
-          <h4>Diario: {{actualDailyCals + 'KCal'}}</h4>
-          <h4>Semanal: {{actualWeeklyCals + 'KCal'}}</h4>
+          <h4>Diario: {{resultsCalsDay + 'KCal'}}</h4>
+          <h4>Semanal: {{resultsCalsWeek + 'KCal'}}</h4>
         </div>
       </div>
     </div>
@@ -52,16 +52,16 @@
         <div class="input-group space-bottom">
           <input type="number" name="cardioPercent" ng-model="periodization.cardioPercent" min="0" max="100" class="form-control"/><span class="input-group-addon keep-border">%</span>
         </div>
-        <h4>KCal</h4>
-        <h4>Min</h4>
+        <h4>{{periodization.cardioCalories}} KCal</h4>
+        <h4>{{periodization.cardioMinutes}} Min</h4>
       </div>
       <div class="col-md-3 text-center">
         <h3>Força</h3>
         <div class="input-group space-bottom">
           <input type="number" name="strengthPercent" ng-model="periodization.strengthPercent" min="0" max="100" class="form-control"/><span class="input-group-addon keep-border">%</span>
         </div>
-        <h4>KCal</h4>
-        <h4>Min</h4>
+        <h4>{{periodization.strengthCalories}} KCal</h4>
+        <h4>{{periodization.strengthMinutes}} Min</h4>
       </div>
     </div>
   </article>
