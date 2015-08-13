@@ -1,8 +1,11 @@
 angular.module 'ehealth'
     
     # Register Controller
-    .controller 'mainCtrl', ($scope, authTokenSvc, alertSvc, modalSvc, utilsSvc, trainingSvc, userSvc) ->
-        $scope.user = userSvc.getLoginData().user
+    .controller 'mainCtrl', ($scope, authTokenSvc, alertSvc, modalSvc, utilsSvc, trainingSvc, userSvc, $location) ->
+        loginData = userSvc.getLoginData()
+        $location.path "/login"if (!loginData)
+        
+        $scope.user = loginData.user
         $scope.basalMetabolicRate = 
             utilsSvc.calculateBasalMetabolicRate $scope.user.weight, $scope.user.height, $scope.user.dob, $scope.user.sex
         $scope.metabolicRate = utilsSvc.calculateDailyMetabolicRate $scope.basalMetabolicRate, $scope.user.activityFactor

@@ -1,7 +1,11 @@
 (function() {
-  angular.module('ehealth').controller('mainCtrl', function($scope, authTokenSvc, alertSvc, modalSvc, utilsSvc, trainingSvc, userSvc) {
-    var wrk;
-    $scope.user = userSvc.getLoginData().user;
+  angular.module('ehealth').controller('mainCtrl', function($scope, authTokenSvc, alertSvc, modalSvc, utilsSvc, trainingSvc, userSvc, $location) {
+    var loginData, wrk;
+    loginData = userSvc.getLoginData();
+    if (!loginData) {
+      $location.path("/login");
+    }
+    $scope.user = loginData.user;
     $scope.basalMetabolicRate = utilsSvc.calculateBasalMetabolicRate($scope.user.weight, $scope.user.height, $scope.user.dob, $scope.user.sex);
     $scope.metabolicRate = utilsSvc.calculateDailyMetabolicRate($scope.basalMetabolicRate, $scope.user.activityFactor);
     $scope.vo2L = utilsSvc.convertVO2MlToL($scope.user.vo2Max, $scope.user.weight);

@@ -23,7 +23,7 @@
 
   /* Angular APP settings */
 
-  angular.module('ehealth', ['ui.router', 'ui.bootstrap', 'ngAnimate']).constant('API_BASE_URL', 'http://virtualtrainer.herokuapp.com/api/').config(function($stateProvider, $httpProvider, $windowProvider, $urlRouterProvider) {
+  angular.module('ehealth', ['ui.router', 'ui.bootstrap', 'ngAnimate']).constant('API_BASE_URL', '//virtualtrainer.herokuapp.com/api/').config(function($stateProvider, $httpProvider, $windowProvider, $urlRouterProvider) {
     $stateProvider.state('register', {
       url: '/register',
       templateUrl: 'views/register.html',
