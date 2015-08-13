@@ -6,5 +6,5 @@ module.exports =
         
     production:
         port: process.env.PORT || 80
-        db: "mongodb://mmapp:m0n3y!@ds053937.mongolab.com:53937/ehealth"
+        db: "mongodb://ehealth:3h34lth+$@ds033123.mongolab.com:33123/ehealth"
         secret: "s3cr3tm4t3"
