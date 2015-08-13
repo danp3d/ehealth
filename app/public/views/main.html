@@ -1,66 +1,68 @@
 
-<div class="row user-menu-container square darkbg"> 
-  <div class="col-md-12 user-details">
-    <div class="row darkbg white">
-      <div class="col-md-3 no-pad">
-        <div class="user-image"><img src="img/profilepic.jpg" class="img-responsive thumbnail"/></div>
+<div ng-cloak="">
+  <div class="row user-menu-container square darkbg"> 
+    <div class="col-md-12 user-details">
+      <div class="row darkbg white">
+        <div class="col-md-3 no-pad">
+          <div class="user-image"><img src="img/profilepic.jpg" class="img-responsive thumbnail"/></div>
+        </div>
+        <div class="col-md-9 no-pad">
+          <div class="user-pad">
+            <h3>Hello, {{user.name}}</h3>
+            <h4><span class="glyphicon glyphicon-scale"></span> {{user.weight + 'Kg'}}</h4>
+            <h4><span class="glyphicon glyphicon-question-sign"></span> {{user.bodyFat + '% gordura corporal'}}</h4>
+            <button class="btn btn-labeled btn-info square"><span class="btn-label"><span class="glyphicon glyphicon-pencil"></span> Atualizar</span></button>
+          </div>
+        </div>
       </div>
-      <div class="col-md-9 no-pad">
-        <div class="user-pad">
-          <h3>Hello, {{user.name}}</h3>
-          <h4><span class="glyphicon glyphicon-scale"></span> {{user.weight + 'Kg'}}</h4>
-          <h4><span class="glyphicon glyphicon-question-sign"></span> {{user.bodyFat + '% gordura corporal'}}</h4>
-          <button class="btn btn-labeled btn-info square"><span class="btn-label"><span class="glyphicon glyphicon-pencil"></span> Atualizar</span></button>
+      <div class="row overview">
+        <h2>Posição atual</h2>
+      </div>
+      <div class="row overview">
+        <div class="col-md-3 user-pad text-center">
+          <h3>Programado</h3>
+          <h4>Diario: {{totalMetabolicRate + 'KCal'}}</h4>
+          <h4>Semanal: {{totalWeeklyMetabolicRate + 'KCal'}}</h4>
+        </div>
+        <div class="col-md-3 user-pad text-center">
+          <h3>Ingerido</h3>
+          <h4>Diario: {{suggestedDailyCals + 'KCal'}}</h4>
+          <h4>Semanal: {{suggestedWeeklyCals + 'KCal'}}</h4>
+        </div>
+        <div class="col-md-3 user-pad text-center">
+          <h3>Gasto</h3>
+          <h4>Diario: {{actualDailyCals + 'KCal'}}</h4>
+          <h4>Semanal: {{actualWeeklyCals + 'KCal'}}</h4>
+        </div>
+        <div class="col-md-3 user-pad text-center">
+          <h3>Resultado</h3>
+          <h4>Diario: {{actualDailyCals + 'KCal'}}</h4>
+          <h4>Semanal: {{actualWeeklyCals + 'KCal'}}</h4>
         </div>
       </div>
     </div>
-    <div class="row overview">
-      <h2>Posição atual</h2>
-    </div>
-    <div class="row overview">
-      <div class="col-md-3 user-pad text-center">
-        <h3>Programado</h3>
-        <h4>Diario: {{totalMetabolicRate + 'KCal'}}</h4>
-        <h4>Semanal: {{totalWeeklyMetabolicRate + 'KCal'}}</h4>
-      </div>
-      <div class="col-md-3 user-pad text-center">
-        <h3>Ingerido</h3>
-        <h4>Diario: {{suggestedDailyCals + 'KCal'}}</h4>
-        <h4>Semanal: {{suggestedWeeklyCals + 'KCal'}}</h4>
-      </div>
-      <div class="col-md-3 user-pad text-center">
-        <h3>Gasto</h3>
-        <h4>Diario: {{actualDailyCals + 'KCal'}}</h4>
-        <h4>Semanal: {{actualWeeklyCals + 'KCal'}}</h4>
-      </div>
-      <div class="col-md-3 user-pad text-center">
-        <h3>Resultado</h3>
-        <h4>Diario: {{actualDailyCals + 'KCal'}}</h4>
-        <h4>Semanal: {{actualWeeklyCals + 'KCal'}}</h4>
-      </div>
-    </div>
   </div>
+  <article class="row user-menu-container square">
+    <div class="row overview">
+      <h2>Periodização do treino</h2>
+    </div>
+    <div class="row overview">
+      <div class="col-md-3 text-center">
+        <h3>Cardio</h3>
+        <div class="input-group space-bottom">
+          <input type="number" name="cardioPercent" ng-model="periodization.cardioPercent" min="0" max="100" class="form-control"/><span class="input-group-addon keep-border">%</span>
+        </div>
+        <h4>KCal</h4>
+        <h4>Min</h4>
+      </div>
+      <div class="col-md-3 text-center">
+        <h3>Força</h3>
+        <div class="input-group space-bottom">
+          <input type="number" name="strengthPercent" ng-model="periodization.strengthPercent" min="0" max="100" class="form-control"/><span class="input-group-addon keep-border">%</span>
+        </div>
+        <h4>KCal</h4>
+        <h4>Min</h4>
+      </div>
+    </div>
+  </article>
 </div>
-<article class="row user-menu-container square">
-  <div class="row overview">
-    <h2>Periodização do treino</h2>
-  </div>
-  <div class="row overview">
-    <div class="col-md-3 text-center">
-      <h3>Cardio</h3>
-      <div class="input-group space-bottom">
-        <input type="number" name="cardioPercent" ng-model="periodization.cardioPercent" min="0" max="100" class="form-control"/><span class="input-group-addon keep-border">%</span>
-      </div>
-      <h4>KCal</h4>
-      <h4>Min</h4>
-    </div>
-    <div class="col-md-3 text-center">
-      <h3>Força</h3>
-      <div class="input-group space-bottom">
-        <input type="number" name="strengthPercent" ng-model="periodization.strengthPercent" min="0" max="100" class="form-control"/><span class="input-group-addon keep-border">%</span>
-      </div>
-      <h4>KCal</h4>
-      <h4>Min</h4>
-    </div>
-  </div>
-</article>
