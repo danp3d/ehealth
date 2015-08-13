@@ -6,10 +6,27 @@ angular.module 'ehealth'
         $scope.basalMetabolicRate = 
             utilsSvc.calculateBasalMetabolicRate $scope.user.weight, $scope.user.height, $scope.user.dob, $scope.user.sex
         $scope.metabolicRate = utilsSvc.calculateDailyMetabolicRate $scope.basalMetabolicRate, $scope.user.activityFactor
-        $scope.leanMass = utilsSvc.calculateLeanMass $scope.user.weight, $scope.user.bodyFat
-        $scope.maxGainRate = utilsSvc.calculateMaxGainRate $scope.leanMass, true # get this value
-        nut = utilsSvc.calculateOptimalNutrientIngestionForMassGain $scope.leanMass, $scope.maxGainRate, $scope.user.activityFactor
-        $scope.calories = nut.calories
-        $scope.proteins = nut.proteins
-        $scope.fat = nut.fat
-        $scope.carbs = nut.carbs
+        $scope.vo2L = utilsSvc.convertVO2MlToL $scope.user.vo2Max, $scope.user.weight
+        
+        wrk = $scope.user.workout
+        $scope.cardioCals = utilsSvc.calculateCalories wrk.cardio.intensity, wrk.cardio.duration, 'cardio'
+        $scope.strengthCals = utilsSvc.calculateCalories wrk.strength.intensity, wrk.strength.duration, 'strength'
+        
+        $scope.totalMetabolicRate = 
+            utilsSvc.calculateTotalMetabolicRate $scope.metabolicRate, ($scope.cardioCals + $scope.strengthCals)
+        
+        $scope.totalWeeklyMetabolicRate = 
+            ($scope.metabolicRate * 7) + (($scope.cardioCals + $scope.strengthCals) * wrk.timesPerWeek)
+        
+        $scope.periodization = {}
+        $scope.periodization.cardioPercent = 50
+        $scope.periodization.strengthPercent = 50
+        
+        $scope.$watch "periodization.cardioPercent", () ->
+            strength = 100 - $scope.periodization.cardioPercent
+            $scope.periodization.strengthPercent = strength if strength != $scope.periodization.strengthPercent
+        
+        $scope.$watch "periodization.strengthPercent", () ->
+            cardio = 100 - $scope.periodization.strengthPercent
+            $scope.periodization.cardioPercent = cardio if cardio != $scope.periodization.cardioPercent
+        

@@ -105,11 +105,14 @@ angular.module 'ehealth'
                 from: maxCF.from - restCF
                 to: maxCF.to - restCF
 
+        # Cardio Frequency during workout
         getWorkoutCF: (resCF, intensity, restCF) ->
             cf = 
                 from: resCF.from * (intensity / 100) + restCF
                 to: resCF.to * (intensity / 100) + restCF
 
+        # Correction to be applied to the spent calories (strenght training is not continuous - people stop and rest for
+        # a few moments while exercising).
         getCorrection: (type, cals, vo2MaxPercent) ->
             correction = 0 if type == 'cardio'
             if type == 'strength'
@@ -120,12 +123,14 @@ angular.module 'ehealth'
                     
             return correction
 
+        # Calories spent on an exercise
         calculateCalories: (vo2L, intensity, workoutDuration, type) ->
             vo2MaxPercent = @translateIntensityToVO2Max intensity, type
             cals = vo2L * vo2MaxPercent * 5 * workoutDuration
             correction = @getCorrection type, cals, vo2MaxPercent
             return cals - correction
             
+        # Basal metabolic rate (how many calories are spent just to live)
         calculateBasalMetabolicRate: (weight, height, dob, sex) ->
             if sex == 'f'
                 bmr = 655.1 + (9.5 * weight) + (1.8 * height) - (4.7 * @getAgeYears(dob, true))
@@ -134,12 +139,15 @@ angular.module 'ehealth'
 
             return bmr
             
+        # Daily metabolic rate (BMR + calories spent on daily activities)
         calculateDailyMetabolicRate: (basalMetabolicRate, activityFactor) ->
             return parseFloat(basalMetabolicRate * activityFactor).toFixed 3
             
+        # Total metabolic rate (daily MR + workouts)
         calculateTotalMetabolicRate: (dailyMetabolicRate, caloriesSpentWithWorkouts) ->
             return dailyMetabolicRate + caloriesSpentWithWorkouts
             
+        # Ideal mody fat %
         getIdealBodyFatRate: () ->
             if sex == 'f'
                 if age <= 25
@@ -164,6 +172,7 @@ angular.module 'ehealth'
                 else
                     return 21
         
+        # Rate the body fat % according to age and sex
         rateBodyFatPerAge: (bodyFat, dob, sex) ->
             age = getAgeYears dob
             if sex == 'f'
@@ -249,9 +258,11 @@ angular.module 'ehealth'
                     return 'bad' if bodyFat <= 30
                     return 'worse'
             
+        # Lean Body Mass
         calculateLeanMass: (weight, bodyFat) ->
             return ((100 - bodyFat) / 100) * weight
             
+        # Maximum LBM gain rate (this doesn't seem to work)
         calculateMaxGainRate: (leanMass, experienced) ->
             experienced = !!experienced
             magicVal = if experienced then 268 else 148
@@ -263,6 +274,7 @@ angular.module 'ehealth'
             rate = gint + suff / 100
             return parseFloat(rate).toFixed 3
             
+        # Optimal nutrient ingestion to maximise LBM gain
         calculateOptimalNutrientIngestionForMassGain: (leanMass, maxGainRate, activityFactor) ->
             gainrateCals = 1.15 * ((maxGainRate * 453 / 7) * 1.63 + ((maxGainRate * 454 / 7) / 3) * 7.91)
             gaincals = Math.round(((370 + (9.8 * leanMass)) * activityFactor) + gainrateCals)
@@ -278,21 +290,28 @@ angular.module 'ehealth'
                 
             return toReturn
         
+        # Body fat in Kg
         calculateBodyFatKg: (weight, bodyFat) ->
             return (bodyFat / 100) * weight
             
+        # Ideal weight according to LBM and ideal body fat %
         calculateIdealWeight: (leanBodyMass, idealBodyFat) ->
             return leanBodyMass / (1 - (idealBodyFat / 100))
         
+        # Exceeding fat in kg
         calculateExceedingFatkg: (bodyFat, idealBodyFat, weight) ->
             return ((bodyFat - idealBodyFat) * weight) / 100
         
+        # LBM %
         calculateLeanBodyMassRate: (bodyFat, weight) ->
-            return (100 - bodyFat) / 100 * weight
+            return (100 - bodyFat)
         
+        
+        # LBM Kg
         calculateLeanBodyMass: (leanBodyMassRate, weight) ->
             return (leanBodyMassRate / 100) * weight
         
+        # Rate the LBM%
         rateLeanBodyMassRate: (leanBodyMassRate, sex) ->
             if sex == 'f'
                 return 'bad' if leanBodyMassRate < 77
@@ -305,6 +324,7 @@ angular.module 'ehealth'
                 
             return undefined
         
+        # How much LBM you need to get to the ideal amount?
         calculateMuscularNeed: (leanBodyMassRate, sex) ->
             return 0 if rateLeanBodyMassRate(leanBodyMassRate, sex) == 'good'
         
@@ -315,6 +335,7 @@ angular.module 'ehealth'
                 
             return (idealLBMRate - leanBodyMassRate) * weight / 100
             
+        # Rate the body fat % according to sex
         rateBodyFat: (bodyFat, sex) ->
             if sex == 'f'
                 return 'essential' if bodyFat <= 10
@@ -327,21 +348,27 @@ angular.module 'ehealth'
                 return 'risk' if bodyFat > 20 and bodyFat <= 25
                 return 'obesity' if bodyFat > 25        
                 
+        # Find out how many months are needed to lose exceeding fat in kg
         calculateMonthsToTrain: (exceedingFatKg, workoutsPerWeek, totalWorkoutCaloriesPerDay, caloriesToReduceOrInc) ->
             ((exceedingFat * 1000) * 9) / (workoutsPerWeek * 52.2 / 12) * (totalWorkoutCaloriesPerDay + caloriesToReduceOrInc)
             
+        # Number of workouts during the months
         calculateNumberOfWorkouts: (workoutsPerWeek, monthsToTrain) ->
             (workoutsPerWeek * 52.2 / 12) * monthsToTrain
             
+        # How much calories to spend on a weekly basis
         suggestWeeklyCaloricExpenditure: (weight) ->
             return weight * 2000 / 70
             
+        # How much calories to spend on a daily basis
         suggestDailyCaloricExpenditure: (weight) ->
             return @suggestWeeklyCaloricExpenditure(weight) / 7
             
+        # How much calories to spend on each workout
         suggestActivityCaloricExpenditure: (weight) ->
             return weight * 300 / 70
             
+        # How long must a session be in order to spend X calories
         calculateSessionDuration: (vo2MaxML, intensity, type, weight, caloriesToSpend) ->
             rvo2 = vo2MaxML - 3.5
             vo2MaxPercent = vo2MaxPercent = @translateIntensityToVO2Max intensity, type

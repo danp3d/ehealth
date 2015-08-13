@@ -490,7 +490,7 @@
         return ((bodyFat - idealBodyFat) * weight) / 100;
       },
       calculateLeanBodyMassRate: function(bodyFat, weight) {
-        return (100 - bodyFat) / 100 * weight;
+        return 100 - bodyFat;
       },
       calculateLeanBodyMass: function(leanBodyMassRate, weight) {
         return (leanBodyMassRate / 100) * weight;

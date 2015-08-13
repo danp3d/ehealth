@@ -1,16 +1,32 @@
 (function() {
   angular.module('ehealth').controller('mainCtrl', function($scope, authTokenSvc, alertSvc, modalSvc, utilsSvc, trainingSvc, userSvc) {
-    var nut;
+    var wrk;
     $scope.user = userSvc.getLoginData().user;
     $scope.basalMetabolicRate = utilsSvc.calculateBasalMetabolicRate($scope.user.weight, $scope.user.height, $scope.user.dob, $scope.user.sex);
     $scope.metabolicRate = utilsSvc.calculateDailyMetabolicRate($scope.basalMetabolicRate, $scope.user.activityFactor);
-    $scope.leanMass = utilsSvc.calculateLeanMass($scope.user.weight, $scope.user.bodyFat);
-    $scope.maxGainRate = utilsSvc.calculateMaxGainRate($scope.leanMass, true);
-    nut = utilsSvc.calculateOptimalNutrientIngestionForMassGain($scope.leanMass, $scope.maxGainRate, $scope.user.activityFactor);
-    $scope.calories = nut.calories;
-    $scope.proteins = nut.proteins;
-    $scope.fat = nut.fat;
-    return $scope.carbs = nut.carbs;
+    $scope.vo2L = utilsSvc.convertVO2MlToL($scope.user.vo2Max, $scope.user.weight);
+    wrk = $scope.user.workout;
+    $scope.cardioCals = utilsSvc.calculateCalories(wrk.cardio.intensity, wrk.cardio.duration, 'cardio');
+    $scope.strengthCals = utilsSvc.calculateCalories(wrk.strength.intensity, wrk.strength.duration, 'strength');
+    $scope.totalMetabolicRate = utilsSvc.calculateTotalMetabolicRate($scope.metabolicRate, $scope.cardioCals + $scope.strengthCals);
+    $scope.totalWeeklyMetabolicRate = ($scope.metabolicRate * 7) + (($scope.cardioCals + $scope.strengthCals) * wrk.timesPerWeek);
+    $scope.periodization = {};
+    $scope.periodization.cardioPercent = 50;
+    $scope.periodization.strengthPercent = 50;
+    $scope.$watch("periodization.cardioPercent", function() {
+      var strength;
+      strength = 100 - $scope.periodization.cardioPercent;
+      if (strength !== $scope.periodization.strengthPercent) {
+        return $scope.periodization.strengthPercent = strength;
+      }
+    });
+    return $scope.$watch("periodization.strengthPercent", function() {
+      var cardio;
+      cardio = 100 - $scope.periodization.strengthPercent;
+      if (cardio !== $scope.periodization.cardioPercent) {
+        return $scope.periodization.cardioPercent = cardio;
+      }
+    });
   });
 
 }).call(this);
