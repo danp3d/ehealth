@@ -15,7 +15,7 @@ bootstrapFbAPI()
 ### Angular APP settings ###
 angular.module('ehealth', ['ui.router', 'ui.bootstrap', 'ngAnimate'])
     # Constants
-    .constant 'API_BASE_URL', 'http://virtualtrainer.herokuapp.com/api/'
+    .constant 'API_BASE_URL', '//virtualtrainer.herokuapp.com/api/'
 
     # Configure the app
     .config ($stateProvider, $httpProvider, $windowProvider, $urlRouterProvider) ->
