@@ -33,6 +33,7 @@
       diastolic: Number
     },
     objective: String,
+    objectiveCalories: Number,
     oauths: [
       {
         provider: String,

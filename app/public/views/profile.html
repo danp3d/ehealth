@@ -126,9 +126,15 @@
       <fieldset class="col-md-6">
         <div class="control-group">
           <label for="objective">Objetivo &nbsp;<span class="glyphicon glyphicon-question-sign help"></span></label>
-          <div id="objective" class="input-group"><span class="input-group-addon keep-border">Aumentar massa muscular                            
-              <input type="radio" ng-model="user.objective" value="gain"/></span><span class="input-group-addon keep-border">Diminuir % de gordura
+          <div id="objective" class="input-group"><span class="input-group-addon keep-border">+ musculos
+              <input type="radio" ng-model="user.objective" value="gain"/></span><span class="input-group-addon keep-border">- gordura
               <input type="radio" ng-model="user.objective" value="loss"/></span></div>
+        </div>
+      </fieldset>
+      <fieldset class="col-md-6">
+        <div class="control-group">
+          <label for="objectiveCalories">{{getObjectiveDescription(user.objective)}}</label>
+          <input id="objectiveCalories" type="number" min="0" max="99999999" placeholder="e.g. 500" required="" ng-model="user.objectiveCalories" class="form-control"/>
         </div>
       </fieldset>
     </div>

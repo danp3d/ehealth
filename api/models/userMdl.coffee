@@ -30,6 +30,7 @@ UserSchema = new mongoose.Schema
         diastolic: Number
     }
     objective: String
+    objectiveCalories: Number
     oauths: [{provider: String, token: String}]
     training: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Train' }]
     

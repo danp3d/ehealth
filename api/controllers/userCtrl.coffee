@@ -64,6 +64,7 @@ class UserCtrl
                 user.restCF = data.user.restCF
                 user.bloodPressure = data.user.bloodPressure
                 user.objective = data.user.objective
+                user.objectiveCalories = data.user.objectiveCalories
                 console.log JSON.stringify data.user
                 user.save (err) ->
                     if err

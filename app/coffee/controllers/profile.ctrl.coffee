@@ -19,6 +19,12 @@ angular.module 'ehealth'
         $scope.translateWorkoutIntensity = (intensity, type) ->
             utilsSvc.translateWorkoutIntensity intensity, type
             
+        $scope.getObjectiveDescription = (objectiveType) ->
+            if objectiveType == "gain"
+                "Calorias para ganho"
+            else
+                "Calorias a reduzir"
+            
         $scope.showActiviryFactorHelp = ->
             modalSvc.showModal null, {
                 hideCloseButton: true

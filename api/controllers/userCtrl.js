@@ -93,6 +93,7 @@
           user.restCF = data.user.restCF;
           user.bloodPressure = data.user.bloodPressure;
           user.objective = data.user.objective;
+          user.objectiveCalories = data.user.objectiveCalories;
           console.log(JSON.stringify(data.user));
           return user.save(function(err) {
             if (err) {

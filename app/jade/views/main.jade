@@ -1,45 +1,42 @@
 .ng-cloak(ng-cloak="")
-    .row.user-menu-container.square.darkbg  
-        .col-md-12.user-details
-            .row.darkbg.white
-                .col-md-3.no-pad
-                    .user-image
-                        img.img-responsive.thumbnail(src="img/profilepic.jpg")
-                .col-md-9.no-pad
-                    .user-pad
-                        h3 Hello, {{user.name}}
-                        h4 #[span.glyphicon.glyphicon-scale] {{user.weight + 'Kg'}}
-                        h4 #[span.glyphicon.glyphicon-question-sign] {{user.bodyFat + '% gordura corporal'}}
-                        button.btn.btn-labeled.btn-info.square
-                            span.btn-label #[span.glyphicon.glyphicon-pencil] Atualizar
+    header.clearfix
+        .col-xs-12.darkbg.white.no-pad
+            .col-xs-3.no-margin.no-pad
+                .user-image.no-pad.no-margin.square.no-border
+                    img.img-responsive.thumbnail.no-pad.no-margin.square.no-border(src="img/profilepic.jpg")
+            .col-xs-9
+                h3 Hello, {{user.name}}
+                h4 #[span.glyphicon.glyphicon-scale] {{user.weight + 'Kg'}}
+                h4 #[span.glyphicon.glyphicon-question-sign] {{user.bodyFat + '% gordura corporal'}}
+                button.btn.btn-labeled.btn-info.square(ui-sref="profile")
+                    span.btn-label #[span.glyphicon.glyphicon-pencil] Atualizar
+
+        .col-xs-12.overview
+            h2 Posição atual
+        .col-xs-12.overview
+            .col-xs-3.user-pad.text-center
+                h3 Programado
+                h4 Diario: {{totalMetabolicRate + 'KCal'}}
+                h4 Semanal: {{totalWeeklyMetabolicRate + 'KCal'}}
+            .col-xs-3.user-pad.text-center
+                h3 Ingerido
+                h4 Diario: {{ingestedCalsDay + 'KCal'}}
+                h4 Semanal: {{ingestedCalsWeek + 'KCal'}}
+            .col-xs-3.user-pad.text-center
+                h3 Gasto
+                h4 Diario: {{spentCalsDay + 'KCal'}}
+                h4 Semanal: {{spentCalsWeek + 'KCal'}}
+            .col-xs-3.user-pad.text-center
+                h3 Resultado
+                h4 Diario: {{resultsCalsDay + 'KCal'}}
+                h4 Semanal: {{resultsCalsWeek + 'KCal'}}
 
 
-            .row.overview
-                h2 Posição atual
-            .row.overview
-                .col-md-3.user-pad.text-center
-                    h3 Programado
-                    h4 Diario: {{totalMetabolicRate + 'KCal'}}
-                    h4 Semanal: {{totalWeeklyMetabolicRate + 'KCal'}}
-                .col-md-3.user-pad.text-center
-                    h3 Ingerido
-                    h4 Diario: {{ingestedCalsDay + 'KCal'}}
-                    h4 Semanal: {{ingestedCalsWeek + 'KCal'}}
-                .col-md-3.user-pad.text-center
-                    h3 Gasto
-                    h4 Diario: {{spentCalsDay + 'KCal'}}
-                    h4 Semanal: {{spentCalsWeek + 'KCal'}}
-                .col-md-3.user-pad.text-center
-                    h3 Resultado
-                    h4 Diario: {{resultsCalsDay + 'KCal'}}
-                    h4 Semanal: {{resultsCalsWeek + 'KCal'}}
-
-
-    article.row.user-menu-container.square
+    article.user-menu-container.square
         .row.overview
             h2 Periodização do treino
         .row.overview
-            .col-md-3.text-center
+            .col-xs-3.text-center
                 h3 Cardio
                 .input-group.space-bottom
                     input.form-control(
@@ -51,7 +48,7 @@
                     span.input-group-addon.keep-border %
                 h4 {{periodization.cardioCalories}} KCal
                 h4 {{periodization.cardioMinutes}} Min
-            .col-md-3.text-center
+            .col-xs-3.text-center
                 h3 Força
                 .input-group.space-bottom
                     input.form-control(
@@ -63,3 +60,7 @@
                     span.input-group-addon.keep-border %
                 h4 {{periodization.strengthCalories}} KCal
                 h4 {{periodization.strengthMinutes}} Min
+            .col-xs-6
+                h3 Açoes
+                button.btn-btn-primary(ui-sref="training") #[span.glyphicon.glyphicon-plus(ui-ref="/")] Adicionar treino
+                button.btn-btn-primary #[span.glyphicon.glyphicon-pencil(ui-ref="/")] Editar periodização

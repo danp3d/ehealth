@@ -221,16 +221,27 @@
                     label(for="objective") Objetivo &nbsp;
                         span.glyphicon.glyphicon-question-sign.help
                     .input-group#objective
-                        span.input-group-addon.keep-border Aumentar massa muscular                            
+                        span.input-group-addon.keep-border + musculos
                             input(
                                 type="radio"
                                 ng-model="user.objective"
                                 value="gain")
-                        span.input-group-addon.keep-border Diminuir % de gordura
+                        span.input-group-addon.keep-border - gordura
                             input(
                                 type="radio"
                                 ng-model="user.objective"
                                 value="loss")
+            fieldset.col-md-6
+                .control-group
+                    label(for="objectiveCalories") {{getObjectiveDescription(user.objective)}}
+                    input#objectiveCalories.form-control(
+                        type="number"
+                        min=0
+                        max=99999999
+                        placeholder="e.g. 500"
+                        required=""
+                        ng-model="user.objectiveCalories")
+                
         .buttons
             input.btn.btn-block.btn-info(type="submit", value="Save", ng-disabled="loginFrm.$invalid")
 

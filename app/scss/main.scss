@@ -6,6 +6,7 @@
 
 body {
     background-color: #eaeaea;
+    margin-top: 120px;
 }
 
 .buttons {
@@ -203,7 +204,6 @@ input[type="range"] {
 .user-menu-container {
     z-index: 10;
     background-color: #fff;
-    margin-top: 20px;
     background-clip: padding-box;
     opacity: 0.97;
     filter: alpha(opacity=97);
@@ -228,6 +228,10 @@ input[type="range"] {
         border-radius: 0;
         border: 0px!important;
     }
+}
+
+no-margin {
+    margin: 0;
 }
 
 .btn-group-vertical {
@@ -293,12 +297,10 @@ ul.user-menu-list {
 }
 
 .no-pad {
-    padding-right: 0;
-    padding-left: 0;
-    padding-bottom: 0;
+    padding: 0;
 }
 
-no-border {
+.no-border {
     border: 0 !important;
 }
 
@@ -405,6 +407,10 @@ article {
     .user-image {
         max-height: 400px;
     }
+}
+
+a.glyphicon:hover {
+    text-decoration: none;
 }
 
 footer {

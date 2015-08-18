@@ -4,7 +4,7 @@ mixin menuItem(icon, text, sref, active)
             span(class="glyphicon glyphicon-" + icon)
             p= text
 
-.nav-bar(ng-controller="navbarCtrl")
+.nav-bar.navbar.navbar-fixed-top(ng-controller="navbarCtrl")
     .container(ng-if="isAuthenticated()")
         .row
             .btn-group.btn-group-justified

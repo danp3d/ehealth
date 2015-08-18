@@ -16,6 +16,13 @@
     $scope.translateWorkoutIntensity = function(intensity, type) {
       return utilsSvc.translateWorkoutIntensity(intensity, type);
     };
+    $scope.getObjectiveDescription = function(objectiveType) {
+      if (objectiveType === "gain") {
+        return "Calorias para ganho";
+      } else {
+        return "Calorias a reduzir";
+      }
+    };
     $scope.showActiviryFactorHelp = function() {
       return modalSvc.showModal(null, {
         hideCloseButton: true,
