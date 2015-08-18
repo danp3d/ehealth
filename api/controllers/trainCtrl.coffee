@@ -1,22 +1,12 @@
 User     = require './../models/userMdl'
 Train    = require './../models/trainMdl'
 jwt      = require './../services/jwt'
+utils    = require './../utils/utils'
 mongoose = require 'mongoose'
 
 class TrainCtrl
-    secret: 's3cr3tm4t3'
-    
-    getUserID: (req, res) =>
-        if not req.headers.authorization
-            return res.status(401).send message: 'User not logged in'
-            
-        token = req.headers.authorization.split ' '
-        payload = jwt.decode token[1], @secret
-        user_id = payload.sub
-        return user_id
-    
     getTraining: (req, res) =>
-        user_id = @getUserID req, res
+        user_id = utils.getUserID req, res
         
         Train.find user_id: new mongoose.Types.ObjectId user_id.toString()
             .exec (err, training) ->
@@ -28,7 +18,7 @@ class TrainCtrl
     insertTrain: (req, res) =>
         self = this
         data = req.body
-        user_id = @getUserID req, res
+        user_id = utils.getUserID req, res
         
         if not data.train_date or not data.durationMinutes or not data.intensity or data.type not in ['cardio', 'strength']
             res.status(500).send message 'Invalid data!'
@@ -52,7 +42,7 @@ class TrainCtrl
     editTrain: (req, res) =>
         self = this
         data = req.body
-        user_id = @getUserID req, res
+        user_id = utils.getUserID req, res
         
         if not data.train_id or not data.train_date or not data.durationMinutes or not data.intensity or data.type not in ['cardio', 'strength']
             res.status(500).send message 'Invalid data!'

@@ -1,5 +1,5 @@
 (function() {
-  var User, UserCtrl, bcrypt, ctrl, https, jwt,
+  var User, UserCtrl, bcrypt, ctrl, https, jwt, mongoose, utils,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   User = require('./../models/userMdl');
@@ -10,12 +10,17 @@
 
   bcrypt = require('bcrypt-nodejs');
 
+  mongoose = require('mongoose');
+
+  utils = require('./../utils/utils');
+
   UserCtrl = (function() {
     function UserCtrl() {
       this.registerUserWithOauth = bind(this.registerUserWithOauth, this);
       this.loginUserWithOauth = bind(this.loginUserWithOauth, this);
       this.oauthLogin = bind(this.oauthLogin, this);
       this.loginUser = bind(this.loginUser, this);
+      this.updateUserPeriodization = bind(this.updateUserPeriodization, this);
       this.updateUserProfile = bind(this.updateUserProfile, this);
       this.createUser = bind(this.createUser, this);
       this.createToken = bind(this.createToken, this);
@@ -103,6 +108,36 @@
             } else {
               return res.status(200).send({
                 "user": user
+              });
+            }
+          });
+        }
+      });
+    };
+
+    UserCtrl.prototype.updateUserPeriodization = function(req, res) {
+      var data, self, user_id;
+      self = this;
+      user_id = new mongoose.Types.ObjectId(utils.getUserID(req, res).toString());
+      data = req.body;
+      return User.findById(user_id, function(err, user) {
+        if (err) {
+          throw err;
+        }
+        if (!user) {
+          return res.status(500).send({
+            message: "User not found"
+          });
+        } else {
+          user.periodization = data.periodization;
+          return user.save(err)(function() {
+            if (err) {
+              return res.status(500).send({
+                "error": err
+              });
+            } else {
+              return res.status(200).send({
+                "periodization": periodization
               });
             }
           });

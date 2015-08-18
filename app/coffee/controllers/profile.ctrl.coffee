@@ -33,6 +33,13 @@ angular.module 'ehealth'
                 bodyText: 'Define a quantidade de esforço exercida nas atividades do dia-a-dia. Exemplo: um trabalhador de escritorio se enquadraria em nível Muito Leve, enquanto um trabalhador na area de construção ou atleta se enquadraria em Moderado. Atletas de alto nível em período de treinamentos intensos se enquadram em Muito Intenso.'}
             
         $scope.updateProfile = ->
+            if not $scope.user.periodization
+                $scope.user.periodization = {} 
+                $scope.user.periodization.percentage = { cardio: 50, strength: 50 }
+                $scope.user.periodization.toIncrease = 2
+                $scope.user.periodization.startDate = new Date()
+                $scope.user.periodization.calendar = []
+            
             userSvc.updateUser($scope.user)
                 .success ->
                     alertSvc.alert "success", "Successo.", "Seus dados foram salvos"

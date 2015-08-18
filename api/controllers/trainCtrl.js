@@ -1,5 +1,5 @@
 (function() {
-  var Train, TrainCtrl, User, ctrl, jwt, mongoose,
+  var Train, TrainCtrl, User, ctrl, jwt, mongoose, utils,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   User = require('./../models/userMdl');
@@ -8,6 +8,8 @@
 
   jwt = require('./../services/jwt');
 
+  utils = require('./../utils/utils');
+
   mongoose = require('mongoose');
 
   TrainCtrl = (function() {
@@ -15,27 +17,11 @@
       this.editTrain = bind(this.editTrain, this);
       this.insertTrain = bind(this.insertTrain, this);
       this.getTraining = bind(this.getTraining, this);
-      this.getUserID = bind(this.getUserID, this);
     }
-
-    TrainCtrl.prototype.secret = 's3cr3tm4t3';
-
-    TrainCtrl.prototype.getUserID = function(req, res) {
-      var payload, token, user_id;
-      if (!req.headers.authorization) {
-        return res.status(401).send({
-          message: 'User not logged in'
-        });
-      }
-      token = req.headers.authorization.split(' ');
-      payload = jwt.decode(token[1], this.secret);
-      user_id = payload.sub;
-      return user_id;
-    };
 
     TrainCtrl.prototype.getTraining = function(req, res) {
       var user_id;
-      user_id = this.getUserID(req, res);
+      user_id = utils.getUserID(req, res);
       return Train.find({
         user_id: new mongoose.Types.ObjectId(user_id.toString())
       }).exec(function(err, training) {
@@ -61,7 +47,7 @@
       var data, newTrn, ref, self, user_id;
       self = this;
       data = req.body;
-      user_id = this.getUserID(req, res);
+      user_id = utils.getUserID(req, res);
       if (!data.train_date || !data.durationMinutes || !data.intensity || ((ref = data.type) !== 'cardio' && ref !== 'strength')) {
         return res.status(500).send(message('Invalid data!'));
       } else {
@@ -90,7 +76,7 @@
       var data, ref, self, user_id;
       self = this;
       data = req.body;
-      user_id = this.getUserID(req, res);
+      user_id = utils.getUserID(req, res);
       if (!data.train_id || !data.train_date || !data.durationMinutes || !data.intensity || ((ref = data.type) !== 'cardio' && ref !== 'strength')) {
         return res.status(500).send(message('Invalid data!'));
       } else {

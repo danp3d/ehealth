@@ -32,6 +32,16 @@
       });
     };
     return $scope.updateProfile = function() {
+      if (!$scope.user.periodization) {
+        $scope.user.periodization = {};
+        $scope.user.periodization.percentage = {
+          cardio: 50,
+          strength: 50
+        };
+        $scope.user.periodization.toIncrease = 2;
+        $scope.user.periodization.startDate = new Date();
+        $scope.user.periodization.calendar = [];
+      }
       return userSvc.updateUser($scope.user).success(function() {
         return alertSvc.alert("success", "Successo.", "Seus dados foram salvos");
       }).error(function() {

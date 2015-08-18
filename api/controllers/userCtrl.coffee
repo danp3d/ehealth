@@ -2,6 +2,8 @@ User    = require './../models/userMdl'
 jwt     = require 'jwt-simple'
 https   = require 'https'
 bcrypt  = require 'bcrypt-nodejs'
+mongoose= require 'mongoose' 
+utils   = require './../utils/utils'
 
 class UserCtrl
     secret: 's3cr3tm4t3'
@@ -72,6 +74,24 @@ class UserCtrl
                     else
                         res.status(200).send "user": user
                     
+    updateUserPeriodization: (req, res) =>
+        self = this
+        user_id = new mongoose.Types.ObjectId utils.getUserID(req, res).toString()
+        
+        # Post data
+        data = req.body
+        
+        User.findById user_id, (err, user) ->
+            throw err if err
+            if not user
+                res.status(500).send message: "User not found"
+            else
+                user.periodization = data.periodization
+                user.save(err) ->
+                    if err
+                        res.status(500).send "error": err
+                    else
+                        res.status(200).send "periodization": periodization
 
     loginUser: (req, res) =>
         self = this

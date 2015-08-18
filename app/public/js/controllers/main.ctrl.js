@@ -6,9 +6,16 @@
       $location.path("/login");
     }
     $scope.user = loginData.user;
+    if (!$scope.user.periodization) {
+      $location.path("/profile");
+    }
     $scope.basalMetabolicRate = utilsSvc.calculateBasalMetabolicRate($scope.user.weight, $scope.user.height, $scope.user.dob, $scope.user.sex);
     $scope.metabolicRate = utilsSvc.calculateDailyMetabolicRate($scope.basalMetabolicRate, $scope.user.activityFactor);
     $scope.vo2L = utilsSvc.convertVO2MlToL($scope.user.vo2Max, $scope.user.weight);
+    $scope.objectiveCals = $scope.user.objectiveCalories;
+    if ($scope.user.objective === 'loss') {
+      $scope.objectiveCals *= -1;
+    }
     wrk = $scope.user.workout;
     $scope.cardioCals = utilsSvc.calculateCalories($scope.vo2L, wrk.cardio.intensity, wrk.cardio.duration, 'cardio');
     $scope.strengthCals = utilsSvc.calculateCalories($scope.vo2L, wrk.strength.intensity, wrk.strength.duration, 'strength');

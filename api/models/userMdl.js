@@ -34,6 +34,20 @@
     },
     objective: String,
     objectiveCalories: Number,
+    periodization: {
+      percentage: {
+        cardio: Number,
+        strength: Number
+      },
+      toIncrease: Number,
+      startDate: Date,
+      calendar: [
+        {
+          date: Date,
+          intensity: Number
+        }
+      ]
+    },
     oauths: [
       {
         provider: String,

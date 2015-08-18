@@ -31,6 +31,12 @@ UserSchema = new mongoose.Schema
     }
     objective: String
     objectiveCalories: Number
+    periodization: {
+        percentage: { cardio: Number, strength: Number }
+        toIncrease: Number
+        startDate: Date
+        calendar: [{ date: Date, intensity: Number }]
+    }
     oauths: [{provider: String, token: String}]
     training: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Train' }]
     
